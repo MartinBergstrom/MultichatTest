@@ -1,6 +1,6 @@
 # MultichatTest
 This is a simple chat program which uses thread to retrieve/send messages.
-Several clients can connect to the server which will broadcast all messages to the connected clients.
+Several clients can connect to the server. The server will broadcast its messages to all the connected clients.
 
 You can choose to run client/server with gui or in console mode.
 
@@ -16,4 +16,7 @@ For server:
 Example cmd with gui:  
 java MainServerHandler "portnummer" gui123  
 Example cmd without gui:  
-java MainServerHandler "portnummer"  
+java MainServerHandler "portnummer"
+
+
+Typing messages is trivial and can be send by the clicking the sendbutton or simply pressing the ENTER key
