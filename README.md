@@ -4,8 +4,8 @@ Several clients can connect to the server which will broadcast all messages to t
 
 You can choose to run client/server with gui or in console mode.
 
-For Client:
-Example cmd with gui:
+For Client:\n
+Example cmd with gui:\n
 java Client "ip-address" "portnummer" gui
 
 You can type what ever you want as third parameter, simply having a third will trigger gui mode.
