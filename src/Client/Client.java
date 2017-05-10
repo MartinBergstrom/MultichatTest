@@ -3,6 +3,7 @@ package Client;
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Created by Martin on 2017-05-09.
@@ -53,7 +54,11 @@ public class Client{
     }
 
     public void startThread(){
-        new Thread(new ServerReader()).run();
+        new Thread(new ServerReader()).start();
+    }
+
+    public void startConsoleToServerThread(){
+        new Thread(new ConsoleToServerWriter()).start();
     }
 
     public boolean sendMessage(String message){
@@ -69,8 +74,19 @@ public class Client{
         return true;
     }
 
-    public static String modidfyMessage(String message){
+    public static String modifyMessage(String message){
         return "CLIENT: " + hostname + " - " + message;
+    }
+
+    class ConsoleToServerWriter implements Runnable{
+        @Override
+        public void run() {
+            Scanner scan = new Scanner(System.in);
+            while(true){
+                String message = scan.nextLine();
+                sendMessage(message);
+            }
+        }
     }
 
     class ServerReader implements Runnable {
@@ -116,6 +132,7 @@ public class Client{
             gui.addClient(c);
         }else{
             c = new Client(args[0], Integer.parseInt(args[1]));
+            c.startConsoleToServerThread();
         }
         c.startThread();
     }

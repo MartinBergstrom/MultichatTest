@@ -64,8 +64,11 @@ public class ClientConnectionThread implements Runnable {
                     if(message.equals("CLIENT - END")) {
                         break;
                     }
-                    System.out.println(message);
-                    gui.updateMessageToTextArea(message);
+                    if(gui!=null){
+                        gui.updateMessageToTextArea(message);
+                    }else{
+                        System.out.println(message);
+                    }
 
                 } catch (IOException e) {
                     try{
