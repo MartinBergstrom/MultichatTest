@@ -36,7 +36,7 @@ public abstract class GUITemplate1 extends JFrame{
 
         JPanel messagePanel = new JPanel(new FlowLayout());
         add(messagePanel,BorderLayout.SOUTH);
-        textField = new JTextField("Write message here");
+        textField = new JTextField("");
         textField.setEditable(false);
         textField.setPreferredSize(new Dimension(200,20));
         sendButton = new JButton("Send");
@@ -75,6 +75,7 @@ public abstract class GUITemplate1 extends JFrame{
         });
     }
 
+    //needs to be synchronized because several clients may send to server at the same time
     public synchronized void updateMessageToTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

@@ -16,13 +16,14 @@ public class MainServerHandler {
     private static String hostname;
     private Socket socket;
     private int port;
-    private List<ClientConnectionThread> connections;
-
+    private List<ClientConnection> connections;
+    private boolean consoleMode;
     private ServerGUI gui;
 
     public MainServerHandler(int port){
         this.port = port;
         connections = new ArrayList<>();
+        consoleMode = true;
         startHandlerThread();
     }
 
@@ -30,6 +31,7 @@ public class MainServerHandler {
         this.port = port;
         this.gui=gui;
         connections = new ArrayList<>();
+        consoleMode = false;
         startHandlerThread();
     }
 
@@ -51,11 +53,17 @@ public class MainServerHandler {
                         //check if old clients are disconnected, and in that case, remove them
                         checkConnections();
 
-                        ClientConnectionThread cct = new ClientConnectionThread(socket,gui);
-                        Thread t = new Thread(cct);
-                        t.start();
+                        ClientConnection cct = null;
+                        if(consoleMode){
+                            cct = new ClientConnection(socket);
+                            System.out.println("A new client at IP address: " + socket.getInetAddress().getHostName() +
+                                    " connected to the server");
+                        }else{
+                            cct = new ClientConnection(socket,gui);
+                            gui.updateMessageToTextArea("A new client at IP address: " + socket.getInetAddress().getHostName() +
+                                    " connected to the server");
+                        }
                         connections.add(cct);
-                        System.out.println("A new client at IP address: " + socket.getInetAddress().getHostName() + " connected to the server");
                     }
                 }
             };
@@ -67,9 +75,9 @@ public class MainServerHandler {
 
     public boolean broadCastMessage(String message){
         boolean finished = true;
-        Iterator<ClientConnectionThread> itr = connections.iterator();
+        Iterator<ClientConnection> itr = connections.iterator();
         while (itr.hasNext()){
-            ClientConnectionThread cct = itr.next();
+            ClientConnection cct = itr.next();
             if(!cct.sendMessage(message)){
                 finished = false;
                 break;
@@ -80,9 +88,9 @@ public class MainServerHandler {
 
     public void checkConnections(){
         if(connections.size()>0){
-            Iterator<ClientConnectionThread> itr = connections.iterator();
+            Iterator<ClientConnection> itr = connections.iterator();
             while(itr.hasNext()){
-                ClientConnectionThread cct = itr.next();
+                ClientConnection cct = itr.next();
                 if(cct.isDisconnected()){
                     itr.remove();
                 }

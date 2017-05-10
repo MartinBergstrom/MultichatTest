@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e05715db-b6aa-4b7c-8412-167bca56d9f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client$ServerReader.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client$ServerReader.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/ClientGUI.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/ClientGUI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1$1.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1$2.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1$3.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/GuiTemplate/GUITemplate1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/ClientConnectionThread.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/ClientConnectionThread.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/ClientConnectionThread.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/MainServerHandler$1.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/MainServerHandler$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/MainServerHandler.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/MainServerHandler.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/Client.java" afterPath="$PROJECT_DIR$/src/Client/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/ClientGUI.java" afterPath="$PROJECT_DIR$/src/Client/ClientGUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/ClientConnectionThread.java" afterPath="$PROJECT_DIR$/src/Server/ClientConnectionThread.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java" afterPath="$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/MainServerHandler.java" afterPath="$PROJECT_DIR$/src/Server/MainServerHandler.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Server/ClientConnectionThread.java" afterPath="$PROJECT_DIR$/src/Server/ClientConnection.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,11 +21,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ClientGUI.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ClientGUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Client/ClientGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+            <state relative-caret-position="156">
+              <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
               <folding>
                 <element signature="e#192#193#0" expanded="true" />
                 <element signature="e#223#224#0" expanded="true" />
@@ -45,7 +39,7 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
+            <state relative-caret-position="18">
               <caret line="76" column="29" lean-forward="true" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -60,22 +54,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="modules.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+      <file leaf-file-name="MainServerHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Server/MainServerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="327">
+              <caret line="63" column="59" lean-forward="false" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3344#3345#0" expanded="true" />
+                <element signature="e#3406#3407#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uiDesigner.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/uiDesigner.xml">
+      <file leaf-file-name="GUITemplate1.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="268">
+              <caret line="85" column="5" lean-forward="true" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,11 +96,11 @@
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <marker date="1494421258764" expanded="true" signature="50508:50550" ph="..." />
-                <marker date="1494421258764" expanded="true" signature="50508:50567" ph="..." />
-                <marker date="1494421258764" expanded="true" signature="50508:50585" ph="..." />
-                <marker date="1494421258764" expanded="true" signature="50508:50598" ph="..." />
-                <marker date="1494421258764" expanded="true" signature="50508:50613" ph="..." />
+                <marker date="1494422976939" expanded="true" signature="49065:49105" ph="..." />
+                <marker date="1494422976939" expanded="true" signature="49065:49122" ph="..." />
+                <marker date="1494422976939" expanded="true" signature="49065:49140" ph="..." />
+                <marker date="1494422976939" expanded="true" signature="49065:49153" ph="..." />
+                <marker date="1494422976939" expanded="true" signature="49065:49168" ph="..." />
               </folding>
             </state>
           </provider>
@@ -126,31 +126,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServerGUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Server/ServerGUI.java">
+      <file leaf-file-name="ClientConnection.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Server/ClientConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="19" column="49" lean-forward="false" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+            <state relative-caret-position="181">
+              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
-                <element signature="e#202#203#0" expanded="true" />
-                <element signature="e#233#234#0" expanded="true" />
-                <element signature="e#286#287#0" expanded="true" />
-                <element signature="e#322#323#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#3223#3224#0" expanded="true" />
+                <element signature="e#3256#3257#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientConnectionThread.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Server/ClientConnectionThread.java">
+      <file leaf-file-name="ServerGUI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Server/ServerGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1075">
-              <caret line="70" column="21" lean-forward="false" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2426#2427#0" expanded="true" />
-                <element signature="e#2459#2460#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="255">
+              <caret line="19" column="49" lean-forward="false" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -184,11 +179,12 @@
         <option value="$PROJECT_DIR$/src/Client/ClientThread.java" />
         <option value="$PROJECT_DIR$/src/Server/ServerGUI.java" />
         <option value="$PROJECT_DIR$/src/GuiTemplate/GuiTemplateVersion1.java" />
-        <option value="$PROJECT_DIR$/src/Server/MainServerHandler.java" />
-        <option value="$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java" />
-        <option value="$PROJECT_DIR$/src/Server/ClientConnectionThread.java" />
         <option value="$PROJECT_DIR$/src/Client/Client.java" />
         <option value="$PROJECT_DIR$/src/Client/ClientGUI.java" />
+        <option value="$PROJECT_DIR$/src/Server/ClientConnectionThread.java" />
+        <option value="$PROJECT_DIR$/src/Server/ClientConnection.java" />
+        <option value="$PROJECT_DIR$/src/Server/MainServerHandler.java" />
+        <option value="$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java" />
       </list>
     </option>
   </component>
@@ -768,43 +764,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server/MainServerHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="93" column="43" lean-forward="false" selection-start-line="93" selection-start-column="43" selection-end-line="93" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2948#2949#0" expanded="true" />
-            <element signature="e#3010#3011#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="55" column="42" lean-forward="true" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2580#2581#0" expanded="true" />
-            <element signature="e#2640#2641#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server/ServerGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="19" column="49" lean-forward="false" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
-          <folding>
-            <element signature="e#202#203#0" expanded="true" />
-            <element signature="e#233#234#0" expanded="true" />
-            <element signature="e#286#287#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -834,11 +793,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1494421258764" expanded="true" signature="50508:50550" ph="..." />
-            <marker date="1494421258764" expanded="true" signature="50508:50567" ph="..." />
-            <marker date="1494421258764" expanded="true" signature="50508:50585" ph="..." />
-            <marker date="1494421258764" expanded="true" signature="50508:50598" ph="..." />
-            <marker date="1494421258764" expanded="true" signature="50508:50613" ph="..." />
+            <marker date="1494422976939" expanded="true" signature="49065:49105" ph="..." />
+            <marker date="1494422976939" expanded="true" signature="49065:49122" ph="..." />
+            <marker date="1494422976939" expanded="true" signature="49065:49140" ph="..." />
+            <marker date="1494422976939" expanded="true" signature="49065:49153" ph="..." />
+            <marker date="1494422976939" expanded="true" signature="49065:49168" ph="..." />
           </folding>
         </state>
       </provider>
@@ -859,21 +818,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server/ClientConnectionThread.java">
+    <entry file="file://$PROJECT_DIR$/src/Client/ClientGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1075">
-          <caret line="70" column="21" lean-forward="false" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
+        <state relative-caret-position="156">
+          <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2426#2427#0" expanded="true" />
-            <element signature="e#2459#2460#0" expanded="true" />
+            <element signature="e#192#193#0" expanded="true" />
+            <element signature="e#223#224#0" expanded="true" />
+            <element signature="e#261#262#0" expanded="true" />
+            <element signature="e#292#293#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
+        <state relative-caret-position="18">
           <caret line="76" column="29" lean-forward="true" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -887,15 +847,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Client/ClientGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/Server/ClientConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        <state relative-caret-position="181">
+          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
-            <element signature="e#192#193#0" expanded="true" />
-            <element signature="e#223#224#0" expanded="true" />
-            <element signature="e#261#262#0" expanded="true" />
-            <element signature="e#292#293#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3223#3224#0" expanded="true" />
+            <element signature="e#3256#3257#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server/MainServerHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="63" column="59" lean-forward="false" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3344#3345#0" expanded="true" />
+            <element signature="e#3406#3407#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server/ServerGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="49" lean-forward="false" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="85" column="5" lean-forward="true" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
