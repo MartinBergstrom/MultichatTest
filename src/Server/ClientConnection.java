@@ -23,7 +23,6 @@ public class ClientConnection {
     public ClientConnection(Socket sock){
         this.socket = sock;
         setUpConnection();
-        new Thread(new ConsoleToClientWriter()).start();
         System.out.println("Connection up and running...");
     }
 
@@ -46,7 +45,7 @@ public class ClientConnection {
         }
     }
 
-    public boolean sendMessage(String message){
+    public synchronized boolean sendMessage(String message){
         try{
             writer.write(message);
             writer.newLine();
@@ -56,17 +55,6 @@ public class ClientConnection {
             return false;
         }
         return true;
-    }
-
-    class ConsoleToClientWriter implements Runnable{
-        @Override
-        public void run() {
-            Scanner scan = new Scanner(System.in);
-            while (true){
-                String message = scan.nextLine();
-                sendMessage(message);
-            }
-        }
     }
 
     class ClientReader implements Runnable{

@@ -84,6 +84,7 @@ public class Client{
             Scanner scan = new Scanner(System.in);
             while(true){
                 String message = scan.nextLine();
+                message = modifyMessage(message);
                 sendMessage(message);
             }
         }

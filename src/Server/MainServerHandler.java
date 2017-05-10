@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Martin on 2017-05-08.
@@ -51,16 +52,20 @@ public class MainServerHandler {
                             break;
                         }
                         //check if old clients are disconnected, and in that case, remove them
+                        //this is a problem cus I if I write after the last client disconnected it crashes
                         checkConnections();
 
                         ClientConnection cct = null;
                         if(consoleMode){
                             cct = new ClientConnection(socket);
-                            System.out.println("A new client at IP address: " + socket.getInetAddress().getHostName() +
+                            if(connections.size()==0){
+                                new Thread(new ConsoleToClientWriter()).start();
+                            }
+                            System.out.println("A new client at IP address: " + hostname +
                                     " connected to the server");
                         }else{
                             cct = new ClientConnection(socket,gui);
-                            gui.updateMessageToTextArea("A new client at IP address: " + socket.getInetAddress().getHostName() +
+                            gui.updateMessageToTextArea("A new client at IP address: " +hostname +
                                     " connected to the server");
                         }
                         connections.add(cct);
@@ -73,7 +78,7 @@ public class MainServerHandler {
         }
     }
 
-    public boolean broadCastMessage(String message){
+    public synchronized boolean broadCastMessage(String message){
         boolean finished = true;
         Iterator<ClientConnection> itr = connections.iterator();
         while (itr.hasNext()){
@@ -100,6 +105,25 @@ public class MainServerHandler {
 
     public static String modidfyMessage(String message){
         return "SERVER: " + hostname + " - " + message;
+    }
+
+    class ConsoleToClientWriter implements Runnable{
+        @Override
+        public void run() {
+            Scanner scan = new Scanner(System.in);
+            while (true){
+                String message = scan.nextLine();
+                if(message==null){
+                    return;
+                }
+                message = modidfyMessage(message);
+                if( !broadCastMessage(message)){
+                    System.out.println("vafan kunde ej broadcasta nu");
+                }else{
+                    System.out.println("kunde brodcasta iaf?");
+                }
+            }
+        }
     }
 
     /**
