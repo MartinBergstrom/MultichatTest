@@ -73,9 +73,6 @@ public class ClientConnection {
                 while (true){
                     try {
                         String message = reader.readLine();
-                        if(message.equals("CLIENT - END")) {
-                            break;
-                        }
                         if(gui!=null){
                             gui.updateMessageToTextArea(message);
                         }else{
@@ -87,6 +84,7 @@ public class ClientConnection {
                             socket.close();
                             is.close();
                             os.close();
+                            gui.updateMessageToTextArea("--- Client: " + socket.getRemoteSocketAddress().toString() + " disconnected ---");
                             System.out.println("CLIENT DISCONNECTED, TERMINATE THREAD");
                             break;
                         }catch (IOException e2) {}

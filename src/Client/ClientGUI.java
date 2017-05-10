@@ -20,7 +20,7 @@ public class ClientGUI extends GUITemplate1 {
     @Override
     public boolean sendMessage(String message) {
         if(ableToType) {
-            message = Client.modifyMessage(message);
+            message = super.modifyMessage(message, "CLIENT", client.getHostName());
             if (client.sendMessage(message)) {
                 updateMessageToTextArea(message);
                 return true;

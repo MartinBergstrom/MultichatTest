@@ -36,62 +36,42 @@ public class MainServerHandler {
         startHandlerThread();
     }
 
-    private void startHandlerThread(){
-        try{
+    private void startHandlerThread() {
+        try {
             serverSocket = new ServerSocket(port);
             hostname = Inet4Address.getLocalHost().toString();
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        System.out.println("Waiting for clients to connect...");
-                        try {
-                            socket = serverSocket.accept();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            break;
-                        }
-                        //check if old clients are disconnected, and in that case, remove them
-                        //this is a problem cus I if I write after the last client disconnected it crashes
-                        checkConnections();
-
-                        ClientConnection cct = null;
-                        if(consoleMode){
-                            cct = new ClientConnection(socket);
-                            if(connections.size()==0){
-                                new Thread(new ConsoleToClientWriter()).start();
-                            }
-                            System.out.println("A new client at IP address: " + hostname +
-                                    " connected to the server");
-                        }else{
-                            cct = new ClientConnection(socket,gui);
-                            gui.updateMessageToTextArea("A new client at IP address: " +hostname +
-                                    " connected to the server");
-                        }
-                        connections.add(cct);
-                    }
-                }
-            };
-            new Thread(r).start();
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        if(consoleMode){
+            new Thread(new ConsoleHandlerThread(socket,serverSocket,this)).start();
+        }else{
+            new Thread(new GUIHandlerThread(gui,socket,serverSocket,this)).start();
+        }
+    }
+
+    public synchronized void addConnection(ClientConnection cct){
+        connections.add(cct);
     }
 
     public synchronized boolean broadCastMessage(String message){
         boolean finished = true;
+        checkConnections();
+        if(connections.size() == 0){
+            gui.disableAbleToType();
+        }
         Iterator<ClientConnection> itr = connections.iterator();
         while (itr.hasNext()){
             ClientConnection cct = itr.next();
-            if(!cct.sendMessage(message)){
-                finished = false;
-                break;
-            }
+                if(!cct.sendMessage(message)){
+                    finished = false;
+                    break;
+                }
         }
         return finished;
     }
 
-    public void checkConnections(){
+    public synchronized void checkConnections(){
         if(connections.size()>0){
             Iterator<ClientConnection> itr = connections.iterator();
             while(itr.hasNext()){
@@ -103,8 +83,10 @@ public class MainServerHandler {
         }
     }
 
-    public static String modidfyMessage(String message){
-        return "SERVER: " + hostname + " - " + message;
+    public synchronized void newConsoleWriterIfEmpty() {
+        if (connections.size() == 0) {
+            new Thread(new MainServerHandler.ConsoleToClientWriter()).start();
+        }
     }
 
     class ConsoleToClientWriter implements Runnable{
@@ -116,14 +98,14 @@ public class MainServerHandler {
                 if(message==null){
                     return;
                 }
-                message = modidfyMessage(message);
-                if( !broadCastMessage(message)){
-                    System.out.println("vafan kunde ej broadcasta nu");
-                }else{
-                    System.out.println("kunde brodcasta iaf?");
-                }
+                message = gui.modifyMessage(message, "SERVER", hostname);
+                broadCastMessage(message);
             }
         }
+    }
+
+    public String getHostname(){
+        return hostname;
     }
 
     /**

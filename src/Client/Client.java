@@ -35,6 +35,7 @@ public class Client{
 
     private void setUpConnection(){
         try {
+            gui.updateMessageToTextArea("Establishing connection to server... ");
             socket = new Socket(host, port);
             is = socket.getInputStream();
             os = socket.getOutputStream();
@@ -47,9 +48,11 @@ public class Client{
             System.err.println("Could not connect to server");
             System.exit(0);
         }
-        System.out.println("Client is up and connected to the server");
         if(gui!=null){
+            gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
             gui.enableAbleToType();
+        }else{
+            System.out.println("Client is up and connected to the server");
         }
     }
 
@@ -74,17 +77,13 @@ public class Client{
         return true;
     }
 
-    public static String modifyMessage(String message){
-        return "CLIENT: " + hostname + " - " + message;
-    }
-
     class ConsoleToServerWriter implements Runnable{
         @Override
         public void run() {
             Scanner scan = new Scanner(System.in);
             while(true){
                 String message = scan.nextLine();
-                message = modifyMessage(message);
+                message = gui.modifyMessage(message, "CLIENT", hostname);
                 sendMessage(message);
             }
         }
@@ -96,9 +95,6 @@ public class Client{
             while (true) {
                 try {
                     String message = reader.readLine();
-                    if (message.equalsIgnoreCase("SERVER - END")) {
-                        break;
-                    }
                     if(gui != null){
                         gui.updateMessageToTextArea(message);
                     }else{
@@ -117,6 +113,10 @@ public class Client{
                 }
             }
         }
+    }
+
+    public String getHostName(){
+        return hostname;
     }
 
     /**

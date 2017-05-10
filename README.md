@@ -19,4 +19,4 @@ Example cmd without gui:
 java MainServerHandler "portnummer"
 
 
-Typing messages is trivial and can be send by the clicking the sendbutton or simply pressing the ENTER key
+Typing messages is trivial and can be send by clicking the sendbutton or simply pressing the ENTER key

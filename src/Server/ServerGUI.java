@@ -17,7 +17,7 @@ public class ServerGUI extends GUITemplate1 {
 
     @Override
     public boolean sendMessage(String message) {
-        message = server.modidfyMessage(message);
+        message = super.modifyMessage(message, "SERVER", server.getHostname());
         if(server.broadCastMessage(message)){
             updateMessageToTextArea(message);
             return true;

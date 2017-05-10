@@ -25,7 +25,7 @@ public abstract class GUITemplate1 extends JFrame{
     public GUITemplate1(String name){
         super(name);
         ableToType = false;
-        setSize(new Dimension(400,300));
+        setSize(new Dimension(440,300));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -80,7 +80,7 @@ public abstract class GUITemplate1 extends JFrame{
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                textArea.append("\n" + text);
+                textArea.append(text + "\n");
             }
         });
     }
@@ -95,6 +95,33 @@ public abstract class GUITemplate1 extends JFrame{
         ableToType = false;
         textField.setEditable(false);
         sendButton.setEnabled(false);
+    }
+
+    /**
+     * Modifies the string to cut it each 50 characters for readability,
+     * also adds the type(SERVER/CLIENT) and hostname tag before the actual message
+     *
+     * @param message
+     * @param typetag
+     * @param hostname
+     * @return
+     */
+    public static String modifyMessage(String message, String typetag, String hostname){
+        if(message.length()>50) {
+            StringBuilder sb = new StringBuilder();
+            String firstString = message.substring(0,51);
+            sb.append(firstString);
+            sb.append("\n");
+            int index = 51;
+            while((firstString = message.substring(index)).length() >50) {
+                sb.append(firstString.substring(0,index));
+                sb.append("\n");
+                index += 50;
+            }
+            sb.append(message.substring(index));
+            return typetag+ ": " + hostname + " - " + sb.toString();
+        }
+        return typetag+ ": " + hostname + " - " + message;
     }
 
     public abstract boolean sendMessage(String message);
