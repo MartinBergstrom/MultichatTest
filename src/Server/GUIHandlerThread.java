@@ -31,7 +31,6 @@ public class GUIHandlerThread implements Runnable{
                 break;
             }
             //check if old clients are disconnected, and in that case, remove them
-            //this is a problem cus I if I write after the last client disconnected it crashes
             server.checkConnections();
 
             ClientConnection cct = null;

@@ -24,6 +24,7 @@ public class Client{
         this.host = host;
         this.port = port;
         setUpConnection();
+        System.out.println("Client is up and connected to the server");
     }
 
     public Client(String host, int port, ClientGUI gui){
@@ -31,6 +32,8 @@ public class Client{
         this.port = port;
         this.gui = gui;
         setUpConnection();
+        gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
+        gui.enableAbleToType();
     }
 
     private void setUpConnection(){
@@ -47,12 +50,6 @@ public class Client{
         } catch (IOException e) {
             System.err.println("Could not connect to server");
             System.exit(0);
-        }
-        if(gui!=null){
-            gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
-            gui.enableAbleToType();
-        }else{
-            System.out.println("Client is up and connected to the server");
         }
     }
 
