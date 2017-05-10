@@ -28,8 +28,6 @@ public class ConsoleHandlerThread implements Runnable{
                 e.printStackTrace();
                 break;
             }
-            //check if old clients are disconnected, and in that case, remove them
-            server.checkConnections();
 
             ClientConnection cct = null;
             cct = new ClientConnection(socket);

@@ -71,6 +71,10 @@ public class MainServerHandler {
         return finished;
     }
 
+    public synchronized boolean isConnectionsEmpty(){
+        return connections.size() == 0? true: false;
+    }
+
     public synchronized void checkConnections(){
         if(connections.size()>0){
             Iterator<ClientConnection> itr = connections.iterator();

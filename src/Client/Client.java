@@ -68,7 +68,11 @@ public class Client{
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            gui.updateMessageToTextArea("Something went wrong, couldn't send the message");
+            if(gui!=null){
+                gui.updateMessageToTextArea("Something went wrong, couldn't send the message");
+            }else{
+                System.out.println("Something went wrong, couldn't send the message");
+            }
             return false;
         }
         return true;

@@ -63,13 +63,6 @@ public class ClientConnection {
             if(!disconnect){
                 reader = new BufferedReader(new InputStreamReader(is));
                 writer = new BufferedWriter(new OutputStreamWriter(os));
-                try{
-                    writer.write("SERVER -  Hello Client");
-                    writer.newLine();
-                    writer.flush();
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
                 while (true){
                     try {
                         String message = reader.readLine();
@@ -81,17 +74,18 @@ public class ClientConnection {
 
                     } catch (IOException e) {
                         try{
+                            disconnect = true;
                             socket.close();
                             is.close();
                             os.close();
                             gui.updateMessageToTextArea("--- Client: " + socket.getRemoteSocketAddress().toString() + " disconnected ---");
+                            gui.checkConnections();
                             System.out.println("CLIENT DISCONNECTED, TERMINATE THREAD");
                             break;
                         }catch (IOException e2) {}
                     }
                 }
             }
-            disconnect = true;
         }
     }
 

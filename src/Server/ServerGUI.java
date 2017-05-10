@@ -25,4 +25,13 @@ public class ServerGUI extends GUITemplate1 {
         return false;
     }
 
+    //smells bad
+    public void checkConnections(){
+        server.checkConnections();
+        if(server.isConnectionsEmpty()){
+            disableAbleToType();
+        }else{
+            enableAbleToType();
+        }
+    }
 }

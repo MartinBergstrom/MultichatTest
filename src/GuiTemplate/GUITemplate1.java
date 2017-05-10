@@ -52,7 +52,9 @@ public abstract class GUITemplate1 extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String text = textField.getText();
                 if(!text.equals("")){
-                    sendMessage(text);
+                    if(!sendMessage(text)){
+                        updateMessageToTextArea("ERROR - COULD NOT SEND THE MESSAGE");
+                    }
                     textField.setText("");
                 }
             }
@@ -65,7 +67,9 @@ public abstract class GUITemplate1 extends JFrame{
                 if(e.getKeyCode() ==  KeyEvent.VK_ENTER){
                     String text = textField.getText();
                     if(!text.equals("")){
-                        sendMessage(text);
+                        if(!sendMessage(text)){
+                            updateMessageToTextArea("ERROR - COULD NOT SEND THE MESSAGE");
+                        }
                         textField.setText("");
                     }
                 }
