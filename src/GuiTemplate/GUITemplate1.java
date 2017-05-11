@@ -2,6 +2,7 @@ package GuiTemplate;
 
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,9 @@ import java.awt.event.KeyListener;
  *
  */
 public abstract class GUITemplate1 extends JFrame{
-    protected JTextArea textArea;
+    //protected JTextArea textArea;
+    protected JTextPane textPane;
+
     protected JTextField textField;
     protected JButton sendButton;
     protected boolean ableToType;
@@ -29,10 +32,15 @@ public abstract class GUITemplate1 extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        textArea = new JTextArea();
-        textArea.setEditable(false);
-        //textArea.setPreferredSize(new Dimension(200,220));
-        add(new JScrollPane(textArea));
+        DefaultStyledDocument document = new DefaultStyledDocument();
+        textPane = new JTextPane(document);
+        textPane.setEditable(false);
+
+//        textArea = new JTextArea();
+//        textArea.setEditable(false);
+//        //textArea.setPreferredSize(new Dimension(200,220));
+//        add(new JScrollPane(textArea));
+        add(new JScrollPane(textPane));
 
         JPanel messagePanel = new JPanel(new FlowLayout());
         add(messagePanel,BorderLayout.SOUTH);
@@ -78,13 +86,21 @@ public abstract class GUITemplate1 extends JFrame{
             public void keyReleased(KeyEvent e) {}
         });
     }
-
-    //needs to be synchronized because several clients may send to server at the same time
+    
     public synchronized void updateMessageToTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                textArea.append(text + "\n");
+                //textArea.append(text + "\n");
+                StyledDocument doc = textPane.getStyledDocument();
+                StyleContext context = new StyleContext();
+                Style style = context.addStyle("test", null);
+                StyleConstants.setForeground(style, Color.BLACK);
+                try {
+                    doc.insertString(doc.getLength(),text + "\n",style);
+                } catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
