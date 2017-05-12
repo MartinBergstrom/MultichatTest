@@ -73,7 +73,22 @@ public class ClientConnection {
                 while (true){
                     try {
                         String header = dis.readUTF();
-                        if(header.equals("msg")){
+                        if(header.endsWith("pic")){
+                            if(gui!=null){
+                                gui.updateMessageToTextArea("--- Received picture from client at: " +
+                                        socket.getRemoteSocketAddress().toString()+" ---");
+                                BufferedImage img = PictureHandler.retrievePicture(dis);
+                                if(img!=null){
+                                    gui.showImage(img);
+                                }else{
+                                    System.out.println("Image was null :(");
+                                }
+                            }else {
+                                System.out.println("Client at: " +
+                                        socket.getRemoteSocketAddress().toString()+" ran GUI-mode and tried to send you a picture");
+                            }
+                        }
+                        else if(header.equals("msg")){
                             String message = dis.readUTF();
                             if(gui!=null){
                                 gui.updateMessageToTextArea(message);

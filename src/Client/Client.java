@@ -82,6 +82,10 @@ public class Client{
         return true;
     }
 
+    public boolean sendPicture(BufferedImage img, String imageType){
+        return PictureHandler.sendPicture(img,imageType,dos);
+    }
+
     class ConsoleToServerWriter implements Runnable{
         @Override
         public void run() {
