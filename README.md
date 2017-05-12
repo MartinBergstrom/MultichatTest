@@ -1,5 +1,5 @@
 # MultichatTest
-This is a simple chat program which uses thread to retrieve/send messages.
+This is a simple chat program which uses thread to retrieve/send messages. Currently you can send text and images
 Several clients can connect to the server. The server will broadcast its messages to all the connected clients.
 
 You can choose to run client/server with gui or in console mode.

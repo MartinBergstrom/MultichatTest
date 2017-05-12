@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -106,6 +105,10 @@ public class MainServerHandler {
         if (connections.size() == 0) {
             new Thread(new MainServerHandler.ConsoleToClientWriter()).start();
         }
+    }
+
+    public synchronized int getNumberOfConnections(){
+        return connections.size();
     }
 
     class ConsoleToClientWriter implements Runnable{

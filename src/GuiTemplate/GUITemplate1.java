@@ -30,6 +30,7 @@ public abstract class GUITemplate1 extends JFrame {
     private JTextField textField;
     private JButton sendButton;
     private JMenuItem picture;
+    protected JPanel messagePanel;
 
     protected boolean ableToType;
     protected BufferedImage img;
@@ -57,7 +58,7 @@ public abstract class GUITemplate1 extends JFrame {
         add(new JScrollPane(textPane));
 
         //create and add MessagePanel with text input and button
-        JPanel messagePanel = new JPanel(new FlowLayout());
+        messagePanel = new JPanel(new FlowLayout());
         add(messagePanel, BorderLayout.SOUTH);
 
         textField = new JTextField("");

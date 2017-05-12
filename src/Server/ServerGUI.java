@@ -2,14 +2,26 @@ package Server;
 
 import GuiTemplate.GUITemplate1;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Created by Martin on 2017-05-09.
  */
 public class ServerGUI extends GUITemplate1 {
     private MainServerHandler server;
+    private JLabel nbrC; //displays the number of current client connections
 
     public ServerGUI(){
         super("Server");
+        JLabel nbrCLabel = new JLabel("Nbr of connections:");
+        nbrCLabel.setFont(new Font("Serif", Font.BOLD,10));
+
+        nbrC = new JLabel("0");
+        nbrC.setFont(new Font("Serif", Font.BOLD,10));
+        messagePanel.add(nbrCLabel);
+        messagePanel.add(nbrC);
+
     }
     public void addServer(MainServerHandler server){
         this.server = server;
@@ -33,7 +45,7 @@ public class ServerGUI extends GUITemplate1 {
         return false;
     }
 
-    //smells bad
+    //smells bad? criss cross reference
     public void checkConnections(){
         server.checkConnections();
         if(server.isConnectionsEmpty()){
@@ -41,5 +53,10 @@ public class ServerGUI extends GUITemplate1 {
         }else{
             enableActive();
         }
+        setNumberOfConnections(server.getNumberOfConnections());
+    }
+
+    public void setNumberOfConnections(int nbr){
+        nbrC.setText(Integer.toString(nbr));
     }
 }

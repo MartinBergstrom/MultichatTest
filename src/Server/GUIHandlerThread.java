@@ -36,6 +36,7 @@ public class GUIHandlerThread implements Runnable{
                     " just connected ----");
             gui.enableActive();
             server.addConnection(cct);
+            gui.setNumberOfConnections(server.getNumberOfConnections());
         }
     }
 }
