@@ -1,5 +1,9 @@
 package Client;
 
+import HandleDataTransfer.PictureHandler;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.Socket;
@@ -14,9 +18,9 @@ public class Client{
     private static String hostname;
     private InputStream is;
     private OutputStream os;
+    private DataInputStream dis;
+    private DataOutputStream dos;
     private Socket socket;
-    private BufferedWriter writer;
-    private BufferedReader reader;
 
     private ClientGUI gui;
 
@@ -33,7 +37,7 @@ public class Client{
         this.gui = gui;
         setUpConnection();
         gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
-        gui.enableAbleToType();
+        gui.enableActive();
     }
 
     private void setUpConnection(){
@@ -43,8 +47,8 @@ public class Client{
             is = socket.getInputStream();
             os = socket.getOutputStream();
 
-            reader = new BufferedReader(new InputStreamReader(is));
-            writer = new BufferedWriter(new OutputStreamWriter(os));
+            dis = new DataInputStream(is);
+            dos = new DataOutputStream(os);
 
             hostname = Inet4Address.getLocalHost().toString();
         } catch (IOException e) {
@@ -63,9 +67,9 @@ public class Client{
 
     public boolean sendMessage(String message){
         try {
-            writer.write(message);
-            writer.newLine();
-            writer.flush();
+            dos.writeUTF("msg");
+            dos.writeUTF(message);
+            dos.flush();
         } catch (IOException e) {
             e.printStackTrace();
             if(gui!=null){
@@ -90,16 +94,28 @@ public class Client{
         }
     }
 
+
     class ServerReader implements Runnable {
         @Override
         public void run() {
             while (true) {
                 try {
-                    String message = reader.readLine();
-                    if(gui != null){
-                        gui.updateMessageToTextArea(message);
-                    }else{
-                        System.out.println(message);
+                    String header = dis.readUTF();
+                    if(header.equals("pic")){
+                        gui.updateMessageToTextArea("--- Picture from server recieved: ---");
+                        BufferedImage img = PictureHandler.retrievePicture(dis);
+                        if(img!=null){
+                            gui.showImage(img);
+                        }else{
+                            System.out.println("Image was null :(");
+                        }
+                    }else if(header.equals("msg")){
+                        String message = dis.readUTF();
+                        if(gui != null){
+                            gui.updateMessageToTextArea(message);
+                        }else{
+                            System.out.println(message);
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

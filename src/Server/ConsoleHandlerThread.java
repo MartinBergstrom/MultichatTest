@@ -12,8 +12,7 @@ public class ConsoleHandlerThread implements Runnable{
     private ServerSocket serverSocket;
     private MainServerHandler server;
 
-    public ConsoleHandlerThread(Socket socket, ServerSocket serverSocket, MainServerHandler server){
-        this.socket=socket;
+    public ConsoleHandlerThread(ServerSocket serverSocket, MainServerHandler server){
         this.serverSocket=serverSocket;
         this.server=server;
     }

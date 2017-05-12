@@ -18,14 +18,17 @@ public class ClientGUI extends GUITemplate1 {
     }
 
     @Override
-    public boolean sendMessage(String message) {
+    public void sendMessage(String message) {
         if(ableToType) {
             message = super.modifyMessage(message, "CLIENT", client.getHostName());
             if (client.sendMessage(message)) {
                 updateMessageToTextArea(message);
-                return true;
             }
         }
+    }
+
+    @Override
+    public boolean sendPicture() {
         return false;
     }
 

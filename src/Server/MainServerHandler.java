@@ -1,5 +1,8 @@
 package Server;
 
+import HandleDataTransfer.PictureHandler;
+
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
@@ -15,7 +18,6 @@ import java.util.Scanner;
 public class MainServerHandler {
     private ServerSocket serverSocket;
     private static String hostname;
-    private Socket socket;
     private int port;
     private List<ClientConnection> connections;
     private boolean consoleMode;
@@ -34,8 +36,12 @@ public class MainServerHandler {
         connections = new ArrayList<>();
         consoleMode = false;
         startHandlerThread();
+        gui.disableActive();
     }
 
+    /**
+     * Starts the handler thread responsible for listening to new client connections
+     */
     private void startHandlerThread() {
         try {
             serverSocket = new ServerSocket(port);
@@ -44,9 +50,9 @@ public class MainServerHandler {
             e.printStackTrace();
         }
         if(consoleMode){
-            new Thread(new ConsoleHandlerThread(socket,serverSocket,this)).start();
+            new Thread(new ConsoleHandlerThread(serverSocket,this)).start();
         }else{
-            new Thread(new GUIHandlerThread(gui,socket,serverSocket,this)).start();
+            new Thread(new GUIHandlerThread(gui,serverSocket,this)).start();
         }
     }
 
@@ -56,10 +62,6 @@ public class MainServerHandler {
 
     public synchronized boolean broadCastMessage(String message){
         boolean finished = true;
-        checkConnections();
-        if(connections.size() == 0){
-            gui.disableAbleToType();
-        }
         Iterator<ClientConnection> itr = connections.iterator();
         while (itr.hasNext()){
             ClientConnection cct = itr.next();
@@ -67,6 +69,19 @@ public class MainServerHandler {
                     finished = false;
                     break;
                 }
+        }
+        return finished;
+    }
+    public synchronized boolean broadcastImage(BufferedImage image, String imageType){
+        boolean finished = true;
+        Iterator<ClientConnection> itr = connections.iterator();
+        System.out.println("connection.size is: "+connections.size());
+        while (itr.hasNext()){
+            ClientConnection cct = itr.next();
+            if(!cct.sendPicture(image,imageType)){
+                finished = false;
+                break;
+            }
         }
         return finished;
     }

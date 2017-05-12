@@ -13,9 +13,8 @@ public class GUIHandlerThread implements Runnable{
     private ServerSocket serverSocket;
     private MainServerHandler server;
 
-    public GUIHandlerThread(ServerGUI gui, Socket socket, ServerSocket serverSocket, MainServerHandler server){
+    public GUIHandlerThread(ServerGUI gui, ServerSocket serverSocket, MainServerHandler server){
         this.gui= gui;
-        this.socket=socket;
         this.serverSocket=serverSocket;
         this.server=server;
     }
@@ -35,7 +34,7 @@ public class GUIHandlerThread implements Runnable{
             cct = new ClientConnection(socket, gui);
             gui.updateMessageToTextArea("--- Client at IP address: " + server.getHostname() +
                     " just connected ----");
-            gui.enableAbleToType();
+            gui.enableActive();
             server.addConnection(cct);
         }
     }

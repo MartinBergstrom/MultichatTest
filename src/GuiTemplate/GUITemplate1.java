@@ -1,6 +1,10 @@
 package GuiTemplate;
 
 
+import javax.activation.MimetypesFileTypeMap;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
@@ -8,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Created by Martin on 2017-05-09.
@@ -17,104 +25,172 @@ import java.awt.event.KeyListener;
  * Subclsses will need to implement specific sendMessage
  *
  */
-public abstract class GUITemplate1 extends JFrame{
-    //protected JTextArea textArea;
-    protected JTextPane textPane;
+public abstract class GUITemplate1 extends JFrame {
+    private JTextPane textPane;
+    private JTextField textField;
+    private JButton sendButton;
+    private JMenuItem picture;
 
-    protected JTextField textField;
-    protected JButton sendButton;
     protected boolean ableToType;
+    protected BufferedImage img;
+    protected String imgType;
 
-    public GUITemplate1(String name){
+    public GUITemplate1(String name) {
         super(name);
         ableToType = false;
-        setSize(new Dimension(440,300));
+        setSize(new Dimension(440, 300));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        JMenuBar menuBar = new JMenuBar();
+        JMenu sendData = new JMenu("Send Data");
+        picture = new JMenuItem("Image");
+        sendData.add(picture);
+        menuBar.add(sendData);
+        setJMenuBar(menuBar);
+
+        //create and add TextPane
         DefaultStyledDocument document = new DefaultStyledDocument();
         textPane = new JTextPane(document);
         textPane.setEditable(false);
 
-//        textArea = new JTextArea();
-//        textArea.setEditable(false);
-//        //textArea.setPreferredSize(new Dimension(200,220));
-//        add(new JScrollPane(textArea));
         add(new JScrollPane(textPane));
 
+        //create and add MessagePanel with text input and button
         JPanel messagePanel = new JPanel(new FlowLayout());
-        add(messagePanel,BorderLayout.SOUTH);
+        add(messagePanel, BorderLayout.SOUTH);
+
         textField = new JTextField("");
-        textField.setEditable(false);
-        textField.setPreferredSize(new Dimension(200,20));
+        textField.setPreferredSize(new Dimension(200, 20));
+
         sendButton = new JButton("Send");
-        sendButton.setEnabled(false);
+
         messagePanel.add(textField);
         messagePanel.add(sendButton);
+
+
         addListeners();
         setVisible(true);
     }
-    public void addListeners(){
+
+    public void addListeners() {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textField.getText();
-                if(!text.equals("")){
-                    if(!sendMessage(text)){
-                        updateMessageToTextArea("ERROR - COULD NOT SEND THE MESSAGE");
-                    }
+                if (!text.equals("")) {
+                    sendMessage(text);
                     textField.setText("");
                 }
             }
         });
         textField.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
+
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() ==  KeyEvent.VK_ENTER){
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String text = textField.getText();
-                    if(!text.equals("")){
-                        if(!sendMessage(text)){
-                            updateMessageToTextArea("ERROR - COULD NOT SEND THE MESSAGE");
-                        }
+                    if (!text.equals("")) {
+                        sendMessage(text);
                         textField.setText("");
                     }
                 }
             }
+
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        picture.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                int result = fileChooser.showOpenDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) { //user selected a file
+                    File choosenFile = fileChooser.getSelectedFile();
+                    img = null;
+                    try {
+                        String rawImageType = "";
+                        ImageInputStream input = ImageIO.createImageInputStream(choosenFile);
+                        Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(input);
+                        while (imageReaders.hasNext()) {
+                            ImageReader reader = (ImageReader) imageReaders.next();
+                            rawImageType = reader.getFormatName();
+                        }
+                        if (rawImageType.equalsIgnoreCase("JPEG")) {
+                            rawImageType = "jpg";
+                        }
+                        imgType = rawImageType;
+                        System.out.println("imgTYPE IS :" + imgType);
+                        if ((img = ImageIO.read(input)) == null) {
+                            updateMessageToTextArea("Could not read that image");
+                        }
+                        if(sendPicture()){
+                            showSentImage();
+                        }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Selected file is not image file");
+                        return;
+                    }
+                }
+            }
         });
     }
-    
+
     public synchronized void updateMessageToTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                //textArea.append(text + "\n");
                 StyledDocument doc = textPane.getStyledDocument();
                 StyleContext context = new StyleContext();
                 Style style = context.addStyle("test", null);
                 StyleConstants.setForeground(style, Color.BLACK);
                 try {
-                    doc.insertString(doc.getLength(),text + "\n",style);
+                    doc.insertString(doc.getLength(), text + "\n", style);
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }
+                textPane.setCaretPosition(doc.getLength());
             }
         });
     }
 
-    public void enableAbleToType(){
+    private void showSentImage() {
+        Image resizedImage = img.getScaledInstance(100, -1, Image.SCALE_SMOOTH); //negative height means keep aspect ratio
+        ImageIcon picture = new ImageIcon(resizedImage);
+        textPane.insertIcon(picture);
+    }
+
+
+    public void showImage(BufferedImage img){
+        SwingUtilities.invokeLater(new Runnable() { //schedule task when called from something else rather than GUI thread itsefl?
+            @Override
+            public void run() {
+                Image resizedImage = img.getScaledInstance(200,-1,Image.SCALE_SMOOTH); //negative height means keep aspect ratio
+                ImageIcon picture = new ImageIcon(resizedImage);
+                textPane.insertIcon(picture);
+                updateMessageToTextArea("");
+            }
+        });
+    }
+
+    public void enableActive(){
         ableToType = true;
         textField.setEditable(true);
         sendButton.setEnabled(true);
+        picture.setEnabled(true);
     }
 
-    public void disableAbleToType(){
+    public void disableActive(){
         ableToType = false;
         textField.setEditable(false);
         sendButton.setEnabled(false);
+        picture.setEnabled(false);
     }
 
     /**
@@ -144,7 +220,8 @@ public abstract class GUITemplate1 extends JFrame{
         return typetag+ ": " + hostname + " - " + message;
     }
 
-    public abstract boolean sendMessage(String message);
+    public abstract void sendMessage(String message);
+    public abstract boolean sendPicture();
 
 }
 

@@ -1,9 +1,11 @@
 package Server;
 
 
+import HandleDataTransfer.PictureHandler;
+
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 import static java.lang.Thread.sleep;
 
@@ -15,8 +17,8 @@ public class ClientConnection {
     private InputStream is;
     private OutputStream os;
     private boolean disconnect = false;
-    private BufferedReader reader;
-    private BufferedWriter writer;
+    private DataInputStream dis;
+    private DataOutputStream dos;
 
     private ServerGUI gui;
 
@@ -31,7 +33,7 @@ public class ClientConnection {
         this.gui = gui;
 
         setUpConnection();
-        gui.enableAbleToType();
+        gui.enableActive();
         gui.updateMessageToTextArea("Connection up and running... ");
     }
 
@@ -39,6 +41,9 @@ public class ClientConnection {
         try {
             is = socket.getInputStream();
             os = socket.getOutputStream();
+            dis = new DataInputStream(is);
+            dos = new DataOutputStream(os);
+
             new Thread(new ClientReader()).start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,9 +52,9 @@ public class ClientConnection {
 
     public synchronized boolean sendMessage(String message){
         try{
-            writer.write(message);
-            writer.newLine();
-            writer.flush();
+            dos.writeUTF("msg");
+            dos.writeUTF(message);
+            dos.flush();
         }catch(IOException e){
             e.printStackTrace();
             return false;
@@ -57,21 +62,25 @@ public class ClientConnection {
         return true;
     }
 
+    public boolean sendPicture(BufferedImage image, String imageType){
+        return PictureHandler.sendPicture(image,imageType,dos);
+    }
+
     class ClientReader implements Runnable{
         @Override
         public void run(){
             if(!disconnect){
-                reader = new BufferedReader(new InputStreamReader(is));
-                writer = new BufferedWriter(new OutputStreamWriter(os));
                 while (true){
                     try {
-                        String message = reader.readLine();
-                        if(gui!=null){
-                            gui.updateMessageToTextArea(message);
-                        }else{
-                            System.out.println(message);
+                        String header = dis.readUTF();
+                        if(header.equals("msg")){
+                            String message = dis.readUTF();
+                            if(gui!=null){
+                                gui.updateMessageToTextArea(message);
+                            }else{
+                                System.out.println(message);
+                            }
                         }
-
                     } catch (IOException e) {
                         try{
                             disconnect = true;

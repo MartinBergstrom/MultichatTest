@@ -3,48 +3,62 @@ package HandleDataTransfer;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * Created by Martin on 2017-05-11.
  *
- * Thread class to send and retrieve pictures over the connection
+ * Provides static methods to write and read image files
  */
 public class PictureHandler {
-    private InputStream is;
-    private OutputStream os;
-
-    public PictureHandler(InputStream is, OutputStream os) {
-        this.is = is;
-        this.os = os;
-    }
 
     /**
+     * Static method to send picture, be sure to have the right ImageType, "jpg", "png" etc..
      *
      * @param img the image to send
-     * @param imageformat "jpg", "png" etc..
-     * @return true if picture was successfully sent
+     * @param imageType the type of image, ex "jpg", "png" etc.
+     * @param dos the DataOutputStream
+     * @return true if the picture sent successfully, false otherwise
      */
-    public synchronized boolean sendPicture(Image img, String imageformat) {
+    public static boolean sendPicture(BufferedImage img, String imageType, DataOutputStream dos) {
         boolean success = false;
         try {
-            imageformat = imageformat.toLowerCase();
-            if(ImageIO.write((BufferedImage)img, imageformat, os)){
-                success = true;
-            }
+            dos.writeUTF("pic"); //send header flag
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(img,imageType,baos);
+            baos.flush();
+            byte[] imageArray = baos.toByteArray();
+            baos.close();
+
+            //write picture to dataoutputstream
+            dos.writeInt(imageArray.length);
+            dos.write(imageArray);
+
+            success = true;
+            dos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return success;
     }
 
-
-    public synchronized Image retrievePicture() {
+    /**
+     * Retrieves a picture from the DataInputStream, assuming header flag "pic" is already read
+     *
+     * @param dis the input stream to get the image from
+     * @return the BufferedImage, null if error occured
+     */
+    public static BufferedImage retrievePicture(DataInputStream dis) {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(is);
+            int imageLength = dis.readInt();
+            byte[] imageArray = new byte[imageLength];
+            for(int i = 0; i<imageLength; i++){
+                imageArray[i] = dis.readByte();
+            }
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(imageArray);
+            img = ImageIO.read(bais);
         } catch (IOException e) {
             e.printStackTrace();
         }
