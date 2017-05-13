@@ -4,8 +4,9 @@ import GuiTemplate.GUITemplate1;
 
 /**
  * Created by Martin on 2017-05-08.
+ *
+ *
  */
-
 public class ClientGUI extends GUITemplate1 {
     private Client client;
 
@@ -36,5 +37,4 @@ public class ClientGUI extends GUITemplate1 {
         updateMessageToTextArea("\n--- Could not send the image, error occured ---");
         return false;
     }
-
 }

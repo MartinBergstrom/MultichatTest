@@ -1,6 +1,7 @@
 package Server;
 
 import GuiTemplate.GUITemplate1;
+import Server.Main.MainServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.awt.*;
  * Created by Martin on 2017-05-09.
  */
 public class ServerGUI extends GUITemplate1 {
-    private MainServerHandler server;
+    private MainServer server;
     private JLabel nbrC; //displays the number of current client connections
 
     public ServerGUI(){
@@ -23,7 +24,7 @@ public class ServerGUI extends GUITemplate1 {
         messagePanel.add(nbrC);
 
     }
-    public void addServer(MainServerHandler server){
+    public void addServer(MainServer server){
         this.server = server;
     }
 

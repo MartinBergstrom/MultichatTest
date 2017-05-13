@@ -1,8 +1,8 @@
 package Client;
 
-import HandleDataTransfer.PictureHandler;
+import Client.Images.ImageHandlerClient;
+import HandleDataTransfer.ImageHandler;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Inet4Address;
@@ -24,12 +24,7 @@ public class Client{
 
     private ClientGUI gui;
 
-    public Client(String host, int port){
-        this.host = host;
-        this.port = port;
-        setUpConnection();
-        System.out.println("Client is up and connected to the server");
-    }
+    private ImageHandlerClient imageClient;
 
     public Client(String host, int port, ClientGUI gui){
         this.host = host;
@@ -38,6 +33,8 @@ public class Client{
         setUpConnection();
         gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
         gui.enableActive();
+
+        imageClient = new ImageHandlerClient(host,4800,gui); //use port 4800 for images
     }
 
     private void setUpConnection(){
@@ -50,19 +47,13 @@ public class Client{
             dis = new DataInputStream(is);
             dos = new DataOutputStream(os);
 
+            new Thread(new ServerReader()).start();
+
             hostname = Inet4Address.getLocalHost().toString();
         } catch (IOException e) {
             System.err.println("Could not connect to server");
             System.exit(0);
         }
-    }
-
-    public void startThread(){
-        new Thread(new ServerReader()).start();
-    }
-
-    public void startConsoleToServerThread(){
-        new Thread(new ConsoleToServerWriter()).start();
     }
 
     public boolean sendMessage(String message){
@@ -83,19 +74,7 @@ public class Client{
     }
 
     public boolean sendPicture(BufferedImage img, String imageType){
-        return PictureHandler.sendPicture(img,imageType,dos);
-    }
-
-    class ConsoleToServerWriter implements Runnable{
-        @Override
-        public void run() {
-            Scanner scan = new Scanner(System.in);
-            while(true){
-                String message = scan.nextLine();
-                message = gui.modifyMessage(message, "CLIENT", hostname);
-                sendMessage(message);
-            }
-        }
+        return imageClient.sendImage(img,imageType);
     }
 
 
@@ -105,32 +84,19 @@ public class Client{
             while (true) {
                 try {
                     String header = dis.readUTF();
-                    if(header.equals("pic")){
-                        gui.updateMessageToTextArea("--- Picture from server recieved: ---");
-                        BufferedImage img = PictureHandler.retrievePicture(dis);
-                        if(img!=null){
-                            gui.showImage(img);
-                        }else{
-                            System.out.println("Image was null :(");
-                        }
-                    }else if(header.equals("msg")){
+                    if(header.equals("msg")){
                         String message = dis.readUTF();
-                        if(gui != null){
-                            gui.updateMessageToTextArea(message);
-                        }else{
-                            System.out.println(message);
-                        }
+                        gui.updateMessageToTextArea(message);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    gui.updateMessageToTextArea("Lost connection to server, shutting down... ");
                     try {
-                        socket.close();
-                        is.close();
-                        os.close();
+                        Thread.sleep(2500);
+                        socket.close(); //this also closes is and os
                         System.exit(0);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                    } catch (IOException e1) {}
+                      catch (InterruptedException e1) {}
                 }
             }
         }
@@ -147,15 +113,9 @@ public class Client{
      */
     public static void main(String[] args){
         Client c = null;
-        if(args.length >2 ){
-            System.out.println(args[0] + " " + args[1]);
-            ClientGUI gui = new ClientGUI();
-            c = new Client(args[0], Integer.parseInt(args[1]), gui);
-            gui.addClient(c);
-        }else{
-            c = new Client(args[0], Integer.parseInt(args[1]));
-            c.startConsoleToServerThread();
-        }
-        c.startThread();
+        System.out.println(args[0] + " " + args[1]);
+        ClientGUI gui = new ClientGUI();
+        c = new Client(args[0], Integer.parseInt(args[1]), gui);
+        gui.addClient(c);
     }
 }

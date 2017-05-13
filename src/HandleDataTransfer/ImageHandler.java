@@ -1,17 +1,17 @@
 package HandleDataTransfer;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * Created by Martin on 2017-05-11.
  *
- * Provides static methods to write and read image files
+ * Sets up a temporary connection to send and retreieve pictures
  */
-public class PictureHandler {
-
+public class ImageHandler {
     /**
      * Static method to send picture, be sure to have the right ImageType, "jpg", "png" etc..
      *
@@ -23,7 +23,7 @@ public class PictureHandler {
     public static boolean sendPicture(BufferedImage img, String imageType, DataOutputStream dos) {
         boolean success = false;
         try {
-            dos.writeUTF("pic"); //send header flag
+            dos.writeUTF("pic");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(img,imageType,baos);
             baos.flush();
