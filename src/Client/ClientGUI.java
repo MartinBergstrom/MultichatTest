@@ -29,12 +29,8 @@ public class ClientGUI extends GUITemplate1 {
     }
 
     @Override
-    public boolean sendPicture() {
-        if(client.sendPicture(img,imgType)){
-            updateMessageToTextArea("\n--- Picture was successfully sent to the server ---");
-            return true;
-        }
-        updateMessageToTextArea("\n--- Could not send the image, error occured ---");
-        return false;
+    public void sendPicture() {
+        client.sendPicture(img,imgType);
+        updateMessageToTextArea("");
     }
 }

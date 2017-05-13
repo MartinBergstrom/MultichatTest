@@ -1,4 +1,4 @@
-package Client.Images;
+package Client.DataTransfer;
 
 import Client.ClientGUI;
 import HandleDataTransfer.ImageHandler;
@@ -7,8 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import static java.lang.Thread.interrupted;
 
 /**
  * Created by Martin on 2017-05-13.
@@ -19,6 +17,9 @@ public class ImageHandlerClient {
     private String ipAddress;
     private int port;
     private Socket socket;
+
+    private BufferedImage img;
+    private String imgType;
 
     private DataInputStream dis;
     private DataOutputStream dos;
@@ -52,8 +53,17 @@ public class ImageHandlerClient {
         }
     }
 
-    public boolean sendImage(BufferedImage img, String imgType){
-        return ImageHandler.sendPicture(img,imgType,dos);
+    public void sendImage(BufferedImage img, String imgType) {
+        this.img = img;
+        this.imgType = imgType;
+        new Thread(new ServerWriter()).start();
+    }
+
+    class ServerWriter implements Runnable{
+        @Override
+        public void run() {
+            ImageHandler.sendPicture(img, imgType, dos);
+        }
     }
 
     class ServerReader implements Runnable{

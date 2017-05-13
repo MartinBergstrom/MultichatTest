@@ -6,7 +6,6 @@ import java.io.*;
  * Created by Martin on 2017-05-12.
  */
 public class FileHandler {
-
     public static boolean sendFile(File file, DataOutputStream dos){
         try {
             //Put this logic in the calling class instead, use this to simply send it?

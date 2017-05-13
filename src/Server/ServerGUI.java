@@ -37,13 +37,11 @@ public class ServerGUI extends GUITemplate1 {
     }
 
     @Override
-    public boolean sendPicture() {
+    public void  sendPicture() {
         if(server.broadcastImage(img, imgType)){
             updateMessageToTextArea("\n--- Picture was successfully broadcasted to the clients ---");
-            return true;
         }
         updateMessageToTextArea("\n--- Could not broadcast the image, error occured ---");
-        return false;
     }
 
     //smells bad? criss cross reference

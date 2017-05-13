@@ -1,7 +1,5 @@
 package GuiTemplate;
 
-
-import javax.activation.MimetypesFileTypeMap;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
@@ -22,7 +20,7 @@ import java.util.Iterator;
  *
  * Abstract superclass for the client and server gui's
  *
- * Subclsses will need to implement specific sendMessage
+ * Subclsses will need to implement specific sendMessage and sendPicture
  *
  */
 public abstract class GUITemplate1 extends JFrame {
@@ -130,9 +128,9 @@ public abstract class GUITemplate1 extends JFrame {
                         if ((img = ImageIO.read(input)) == null) {
                             updateMessageToTextArea("Could not read that image");
                         }
-                        if(sendPicture()){
-                            showSentImage();
-                        }
+                        sendPicture();
+                        showSentImage();
+
                     } catch (IOException e1) {
                         e1.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Selected file is not image file");
@@ -222,7 +220,7 @@ public abstract class GUITemplate1 extends JFrame {
     }
 
     public abstract void sendMessage(String message);
-    public abstract boolean sendPicture();
+    public abstract void sendPicture();
 
 }
 

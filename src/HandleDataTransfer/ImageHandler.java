@@ -3,8 +3,6 @@ package HandleDataTransfer;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * Created by Martin on 2017-05-11.

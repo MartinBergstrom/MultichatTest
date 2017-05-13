@@ -28,12 +28,12 @@ public class HandleNewClientConnections implements Runnable{
         this.server=server;
     }
 
-
     @Override
     public void run() {
         gui.updateMessageToTextArea("Waiting for clients to connect... ");
         try(ServerSocket serverSocket = new ServerSocket(port);
             ServerSocket imageServerSocket = new ServerSocket(imagePort)){
+
             Socket socket;
             Socket imageSocket;
             while (true) {
@@ -54,7 +54,7 @@ public class HandleNewClientConnections implements Runnable{
                 gui.setNumberOfConnections(server.getNumberOfConnections());
             }
         }catch (IOException e){
-            e.printStackTrace();
+            e.printStackTrace(); //Already shut down
         }
     }
 }

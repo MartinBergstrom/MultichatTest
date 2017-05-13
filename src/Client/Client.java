@@ -1,13 +1,11 @@
 package Client;
 
-import Client.Images.ImageHandlerClient;
-import HandleDataTransfer.ImageHandler;
+import Client.DataTransfer.ImageHandlerClient;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.Socket;
-import java.util.Scanner;
 
 /**
  * Created by Martin on 2017-05-09.
@@ -34,6 +32,7 @@ public class Client{
         gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
         gui.enableActive();
 
+        //Set up new connection for image transfer
         imageClient = new ImageHandlerClient(host,4800,gui); //use port 4800 for images
     }
 
@@ -73,8 +72,8 @@ public class Client{
         return true;
     }
 
-    public boolean sendPicture(BufferedImage img, String imageType){
-        return imageClient.sendImage(img,imageType);
+    public void sendPicture(BufferedImage img, String imageType){
+        imageClient.sendImage(img,imageType);
     }
 
 
