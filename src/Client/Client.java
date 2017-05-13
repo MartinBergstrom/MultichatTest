@@ -94,6 +94,7 @@ public class Client{
                     try {
                         Thread.sleep(2500);
                         socket.close(); //this also closes is and os
+                        imageClient.disconnect();
                         System.exit(0);
                     } catch (IOException e1) {}
                       catch (InterruptedException e1) {}

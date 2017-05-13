@@ -12,7 +12,7 @@ import java.net.Socket;
  */
 public class ClientImageConnection {
     private Socket clientSocket;
-
+    private boolean disconnected = false;
     private DataInputStream dis;
     private DataOutputStream dos;
 
@@ -49,31 +49,34 @@ public class ClientImageConnection {
             while (true){
                 String header = null;
                 try {
+                    if(disconnected){
+                        throw new IOException();
+                    }
                     header = dis.readUTF();
                     if(header.equals("pic")){
-                        if(gui!=null){
-                            gui.updateMessageToTextArea("--- Received picture from client at: " +
-                                    clientSocket.getRemoteSocketAddress().toString()+" ---");
-                            BufferedImage img = ImageHandler.retrievePicture(dis);
-                            if(img!=null){
-                                gui.showImage(img);
-                            }else{
-                                System.out.println("Image was null :(");
-                            }
+                        gui.updateMessageToTextArea("--- Received picture from client at: " +
+                                clientSocket.getRemoteSocketAddress().toString()+" ---");
+                        BufferedImage img = ImageHandler.retrievePicture(dis);
+                        if(img!=null){
+                            gui.showImage(img);
                         }else {
-                            System.out.println("Client at: " +
-                                    clientSocket.getRemoteSocketAddress().toString()+" ran GUI-mode and tried to send you a picture");
+                            System.out.println("Image was null :(");
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                     try{
                         clientSocket.close();
+                        return;
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                 }
             }
         }
+    }
+
+    public void disconnect(){
+        disconnected = true;
     }
 }

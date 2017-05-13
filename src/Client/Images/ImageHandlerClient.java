@@ -8,6 +8,8 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import static java.lang.Thread.interrupted;
+
 /**
  * Created by Martin on 2017-05-13.
  *
@@ -22,6 +24,7 @@ public class ImageHandlerClient {
     private DataOutputStream dos;
 
     private ClientGUI gui;
+    private boolean disconnected = false;
 
     public ImageHandlerClient(String ipAddress, int port, ClientGUI gui) {
         this.ipAddress = ipAddress;
@@ -58,6 +61,9 @@ public class ImageHandlerClient {
         public void run() {
             while (true){
                 try {
+                    if(disconnected){
+                        throw  new IOException(); //exit thread
+                    }
                     String header = dis.readUTF();
                     if(header.equals("pic")) {
                         gui.updateMessageToTextArea("--- Picture from server recieved: ---");
@@ -76,5 +82,9 @@ public class ImageHandlerClient {
                 }
             }
         }
+    }
+
+    public void disconnect(){
+        disconnected = true;
     }
 }

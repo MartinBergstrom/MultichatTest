@@ -17,9 +17,8 @@ import java.net.Socket;
  */
 public class HandleNewClientConnections implements Runnable{
     private ServerGUI gui;
-    private Socket socket;
-
     private int port;
+    private final int imagePort = 4800;
 
     private MainServer server;
 
@@ -29,36 +28,29 @@ public class HandleNewClientConnections implements Runnable{
         this.server=server;
     }
 
-    private ClientImageConnection setUpImageConnection(){
-        ClientImageConnection imageServer = null;
-        try{
-            ServerSocket imageServerSocket = new ServerSocket(4800);
-            Socket imageSocket = imageServerSocket.accept();
-            imageServer = new ClientImageConnection(imageSocket,gui);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return imageServer;
-    }
 
     @Override
     public void run() {
         gui.updateMessageToTextArea("Waiting for clients to connect... ");
-        try(ServerSocket serverSocket = new ServerSocket(port)){
+        try(ServerSocket serverSocket = new ServerSocket(port);
+            ServerSocket imageServerSocket = new ServerSocket(imagePort)){
+            Socket socket;
+            Socket imageSocket;
             while (true) {
                 try {
-                    socket = serverSocket.accept();
+                     socket = serverSocket.accept();
+                    imageSocket = imageServerSocket.accept();
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
                 }
+                ClientImageConnection cic = new ClientImageConnection(imageSocket,gui);
 
-                ClientMessageConnection cct = null;
-                cct = new ClientMessageConnection(socket, gui, setUpImageConnection());
+                ClientMessageConnection cmt = new ClientMessageConnection(socket, gui, cic);
                 gui.updateMessageToTextArea("--- Client at IP address: " + server.getHostname() +
                         " just connected ----");
                 gui.enableActive();
-                server.addConnection(cct);
+                server.addConnection(cmt);
                 gui.setNumberOfConnections(server.getNumberOfConnections());
             }
         }catch (IOException e){
