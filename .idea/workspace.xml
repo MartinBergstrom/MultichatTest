@@ -2,41 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e05715db-b6aa-4b7c-8412-167bca56d9f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Server/GUI/ListOfConnections.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/DataTransfer/AbstractConnectionToServer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/DataTransfer/FileHandlerClient$ServerReader.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/DataTransfer/FileHandlerClient$ServerWriter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/DataTransfer/FileHandlerClient.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/DataTransfer/ImageHandlerClient$ServerReader.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/DataTransfer/ImageHandlerClient$ServerWriter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/DataTransfer/ImageHandlerClient.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/ServerGUI.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client$ServerReader.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client$ServerReader.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Client/Client.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/HandleDataTransfer/FileHandler.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/HandleDataTransfer/FileHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/AbstractClientConnection.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/AbstractClientConnection.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientFileConnection.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientFileConnection.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientImageConnection$ClientReader.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientImageConnection$ClientReader.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientImageConnection.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientImageConnection.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientMessageConnection$ClientReader.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientMessageConnection$ClientReader.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientMessageConnection.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Clientconnections/ClientMessageConnection.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/HandleNewClients/HandleNewClientConnections.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/HandleNewClients/HandleNewClientConnections.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Main/MainServer.class" afterPath="$PROJECT_DIR$/out/production/ChatMaster3000/Server/Main/MainServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/Client.java" afterPath="$PROJECT_DIR$/src/Client/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java" afterPath="$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HandleDataTransfer/FileHandler.java" afterPath="$PROJECT_DIR$/src/HandleDataTransfer/FileHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/Clientconnections/AbstractClientConnection.java" afterPath="$PROJECT_DIR$/src/Server/Clientconnections/AbstractClientConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/Clientconnections/ClientFileConnection.java" afterPath="$PROJECT_DIR$/src/Server/Clientconnections/ClientFileConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/Clientconnections/ClientImageConnection.java" afterPath="$PROJECT_DIR$/src/Server/Clientconnections/ClientImageConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/Clientconnections/ClientMessageConnection.java" afterPath="$PROJECT_DIR$/src/Server/Clientconnections/ClientMessageConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/HandleNewClients/HandleNewClientConnections.java" afterPath="$PROJECT_DIR$/src/Server/HandleNewClients/HandleNewClientConnections.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/Main/MainServer.java" afterPath="$PROJECT_DIR$/src/Server/Main/MainServer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Client/DataTransfer/AbstractConnectionToServer.java" afterPath="$PROJECT_DIR$/src/Client/ServerConnections/AbstractConnectionToServer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Client/DataTransfer/FileHandlerClient.java" afterPath="$PROJECT_DIR$/src/Client/ServerConnections/FileHandlerClient.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Client/DataTransfer/ImageHandlerClient.java" afterPath="$PROJECT_DIR$/src/Client/ServerConnections/ImageHandlerClient.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Server/ServerGUI.java" afterPath="$PROJECT_DIR$/src/Server/GUI/ServerGUI.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -84,7 +50,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientFileConnection.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ClientFileConnection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Server/Clientconnections/ClientFileConnection.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="798">
@@ -136,6 +102,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="46" lean-forward="true" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ClientImageConnection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Server/Clientconnections/ClientImageConnection.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -161,28 +137,6 @@
                 <element signature="e#3037#3038#0" expanded="true" />
                 <element signature="e#3108#3109#0" expanded="true" />
                 <element signature="e#3163#3164#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ListOfConnections.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Server/GUI/ListOfConnections.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#998#999#0" expanded="true" />
-                <element signature="e#1053#1054#0" expanded="true" />
-                <element signature="e#1110#1111#0" expanded="true" />
-                <element signature="e#1163#1164#0" expanded="true" />
-                <element signature="e#1224#1225#0" expanded="true" />
-                <element signature="e#1265#1266#0" expanded="true" />
-                <element signature="e#1329#1330#0" expanded="true" />
-                <element signature="e#1373#1374#0" expanded="true" />
-                <element signature="e#1427#1428#0" expanded="true" />
-                <element signature="e#1454#1455#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -243,7 +197,6 @@
         <option value="$PROJECT_DIR$/src/Client/DataTransfer/ImageHandlerClient.java" />
         <option value="$PROJECT_DIR$/src/Client/DataTransfer/FileHandlerClient.java" />
         <option value="$PROJECT_DIR$/src/Client/ClientGUI.java" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/Client/Client.java" />
         <option value="$PROJECT_DIR$/src/Server/ServerGUI.java" />
         <option value="$PROJECT_DIR$/src/HandleDataTransfer/FileHandler.java" />
@@ -260,6 +213,7 @@
         <option value="$PROJECT_DIR$/src/GuiTemplate/GUITemplate1.java" />
         <option value="$PROJECT_DIR$/src/Server/GUI/ServerGUI.java" />
         <option value="$PROJECT_DIR$/src/Server/Clientconnections/ClientMessageConnection.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -861,6 +815,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -877,7 +832,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1206,14 +1161,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="94" lean-forward="false" selection-start-line="19" selection-start-column="94" selection-end-line="19" selection-end-column="94" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Server/GUI/ListOfConnections.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
@@ -1330,6 +1277,14 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="46" lean-forward="true" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
