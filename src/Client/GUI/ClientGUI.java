@@ -1,5 +1,6 @@
-package Client;
+package Client.GUI;
 
+import Client.Main.Client;
 import GuiTemplate.GUITemplate1;
 
 import java.awt.image.BufferedImage;

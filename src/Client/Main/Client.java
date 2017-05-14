@@ -1,5 +1,6 @@
-package Client;
+package Client.Main;
 
+import Client.GUI.ClientGUI;
 import Client.ServerConnections.FileHandlerClient;
 import Client.ServerConnections.ImageHandlerClient;
 
@@ -100,13 +101,18 @@ public class Client{
                     try {
                         Thread.sleep(2500);
                         socket.close(); //this also closes is and os
-                        imageClient.disconnect();
+                        disconnectConnections();
                         System.exit(0);
                     } catch (IOException e1) {}
                       catch (InterruptedException e1) {}
                 }
             }
         }
+    }
+
+    private void disconnectConnections(){
+        imageClient.disconnect();
+        fileClient.disconnect();
     }
 
     public String getHostName(){

@@ -1,6 +1,6 @@
 package Client.ServerConnections;
 
-import Client.ClientGUI;
+import Client.GUI.ClientGUI;
 import HandleDataTransfer.ImageHandler;
 
 import java.awt.image.BufferedImage;

@@ -63,18 +63,18 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
     @Override
     public void  sendPicture(BufferedImage img, String imgType) {
         if(server.sendImage(img, imgType)){
-            updateMessageToTextArea("\n--- Picture was successfully broadcasted to the clients ---");
+            updateMessageToTextArea("\n--- Picture was successfully sent to the selected clients ---");
         }else{
-            updateMessageToTextArea("\n--- Could not broadcast the image, error occured ---");
+            updateMessageToTextArea("\n--- Could not send the image, error occurred ---");
         }
     }
 
     @Override
     public void sendFile(File file) {
         if(server.sendFile(file)){
-            updateMessageToTextArea("\n--- File was successfully broadcasted to the clients ---");
+            updateMessageToTextArea("\n--- File was successfully sent to the clients ---");
         }else{
-            updateMessageToTextArea("\n--- Could not broadcast the file, error occured ---");
+            updateMessageToTextArea("\n--- Could not send the file, error occurred ---");
         }
     }
 

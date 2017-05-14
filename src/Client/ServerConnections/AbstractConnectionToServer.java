@@ -1,6 +1,6 @@
 package Client.ServerConnections;
 
-import Client.ClientGUI;
+import Client.GUI.ClientGUI;
 
 import java.io.*;
 import java.net.Socket;

@@ -16,7 +16,6 @@ public class ClientFileConnection extends AbstractClientConnection {
     public ClientFileConnection(Socket sock, ServerGUI gui) {
         super(sock, gui);
         new Thread(new ClientReader()).start();
-        System.out.println("ClientFileConnection is up and running");
     }
 
     public void sendFile(File file){
@@ -28,7 +27,6 @@ public class ClientFileConnection extends AbstractClientConnection {
         @Override
         public void run() {
             FileHandler.sendFile(file,dos);
-            System.out.println("I just sent the file");
         }
     }
 

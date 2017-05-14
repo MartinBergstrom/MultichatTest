@@ -17,7 +17,6 @@ public class ClientImageConnection extends AbstractClientConnection {
     public ClientImageConnection(Socket socket, ServerGUI gui) {
         super(socket,gui);
         new Thread(new ClientReader()).start();
-        System.out.println("ClientImageConnection is up and running");
     }
 
     public void sendImage(BufferedImage img, String imgType){
@@ -65,5 +64,4 @@ public class ClientImageConnection extends AbstractClientConnection {
             }
         }
     }
-
 }
