@@ -1,10 +1,14 @@
 package Server.Main;
 
 import Server.Clientconnections.ClientMessageConnection;
+import Server.GUI.ListOfConnections;
 import Server.HandleNewClients.HandleNewClientConnections;
-import Server.ServerGUI;
+import Server.GUI.ServerGUI;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -14,17 +18,20 @@ import java.util.List;
 /**
  * Created by Martin on 2017-05-08.
  */
-public class MainServer {
+public class MainServer{
     private static String hostname;
     private int port;
-    private List<ClientMessageConnection> connections;
-    private ServerGUI gui;
+    private List<ClientMessageConnection> allConnections;
+    private List<ClientMessageConnection> activeConnections;
 
+    private ServerGUI gui;
 
     public MainServer(int port, ServerGUI gui){
         this.port = port;
         this.gui=gui;
-        connections = new ArrayList<>();
+
+        allConnections = new ArrayList<>();
+        activeConnections = new ArrayList<>();
         try {
             hostname = Inet4Address.getLocalHost().toString();
         } catch (UnknownHostException e) {
@@ -35,7 +42,7 @@ public class MainServer {
     }
 
     /**
-     * Starts the handler thread responsible for listening to new client connections
+     * Starts the handler thread responsible for listening to new client allConnections
      */
     private void startHandlerThread() {
         new Thread(new HandleNewClientConnections(gui,port,this)).start();
@@ -43,28 +50,16 @@ public class MainServer {
     }
 
     public synchronized void addConnection(ClientMessageConnection cct){
-        connections.add(cct);
+        allConnections.add(cct);
+        gui.addConnectionToList(cct); //add to gui
     }
 
-    public synchronized boolean broadCastMessage(String message){
+    public synchronized boolean sendMessage(String message){
         boolean finished = true;
-        Iterator<ClientMessageConnection> itr = connections.iterator();
+        Iterator<ClientMessageConnection> itr = activeConnections.iterator();
         while (itr.hasNext()){
             ClientMessageConnection cct = itr.next();
-                if(!cct.sendMessage(message)){
-                    finished = false;
-                    break;
-                }
-        }
-        return finished;
-    }
-    public synchronized boolean broadcastImage(BufferedImage image, String imageType){
-        boolean finished = true;
-        Iterator<ClientMessageConnection> itr = connections.iterator();
-        System.out.println("connection.size is: "+connections.size());
-        while (itr.hasNext()){
-            ClientMessageConnection cct = itr.next();
-            if(!cct.sendPicture(image,imageType)){
+            if(!cct.sendMessage(message)){
                 finished = false;
                 break;
             }
@@ -72,24 +67,47 @@ public class MainServer {
         return finished;
     }
 
+    public synchronized boolean sendImage(BufferedImage image, String imageType){
+        Iterator<ClientMessageConnection> itr = activeConnections.iterator();
+        while (itr.hasNext()){
+            ClientMessageConnection cct = itr.next();
+            cct.sendPicture(image,imageType);
+        }
+        return true;
+    }
+
+    public synchronized boolean sendFile(File file){
+        Iterator<ClientMessageConnection> itr = activeConnections.iterator();
+        while (itr.hasNext()){
+            ClientMessageConnection cct = itr.next();
+            cct.sendFile(file);
+        }
+        return true;
+    }
+
     public synchronized boolean isConnectionsEmpty(){
-        return connections.size() == 0? true: false;
+        return allConnections.size() == 0? true: false;
     }
 
     public synchronized void checkConnections(){
-        if(connections.size()>0){
-            Iterator<ClientMessageConnection> itr = connections.iterator();
+        if(allConnections.size()>0){
+            Iterator<ClientMessageConnection> itr = allConnections.iterator();
             while(itr.hasNext()){
                 ClientMessageConnection cct = itr.next();
                 if(cct.getDisconnect()){
                     itr.remove();
+                    gui.removeConnectionFromList(cct);
                 }
             }
         }
     }
 
+    public synchronized void setSelectedValues(List<ClientMessageConnection> selectedValues) {
+        activeConnections = new ArrayList<>(selectedValues);
+    }
+
     public synchronized int getNumberOfConnections(){
-        return connections.size();
+        return allConnections.size();
     }
 
 

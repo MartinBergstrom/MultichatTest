@@ -1,6 +1,7 @@
 package Client;
 
-import Client.DataTransfer.ImageHandlerClient;
+import Client.ServerConnections.FileHandlerClient;
+import Client.ServerConnections.ImageHandlerClient;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -23,6 +24,7 @@ public class Client{
     private ClientGUI gui;
 
     private ImageHandlerClient imageClient;
+    private FileHandlerClient fileClient;
 
     public Client(String host, int port, ClientGUI gui){
         this.host = host;
@@ -32,8 +34,9 @@ public class Client{
         gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
         gui.enableActive();
 
-        //Set up new connection for image transfer
+        //Set up connections for image and file transfer
         imageClient = new ImageHandlerClient(host,4800,gui); //use port 4800 for images
+        fileClient = new FileHandlerClient(host, 4900,gui); //use port 4900 for files
     }
 
     private void setUpConnection(){
@@ -77,7 +80,7 @@ public class Client{
     }
 
     public void sendFile(File file){
-
+        fileClient.sendFile(file);
     }
 
 

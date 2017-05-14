@@ -1,4 +1,4 @@
-package Client.DataTransfer;
+package Client.ServerConnections;
 
 import Client.ClientGUI;
 

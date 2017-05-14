@@ -1,6 +1,6 @@
 package Server.Clientconnections;
 
-import Server.ServerGUI;
+import Server.GUI.ServerGUI;
 
 import java.io.*;
 import java.net.Socket;
@@ -10,6 +10,7 @@ import java.net.Socket;
  */
 public class AbstractClientConnection {
     protected Socket socket;
+    protected String clientName;
     protected boolean disconnected = false;
     protected DataInputStream dis;
     protected DataOutputStream dos;
@@ -20,6 +21,7 @@ public class AbstractClientConnection {
         this.socket = sock;
         this.gui = gui;
         setUpConnection();
+        clientName = socket.getRemoteSocketAddress().toString();
     }
 
 

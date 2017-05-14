@@ -1,7 +1,7 @@
 package Server.Clientconnections;
 
 import HandleDataTransfer.ImageHandler;
-import Server.ServerGUI;
+import Server.GUI.ServerGUI;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -10,7 +10,9 @@ import java.net.Socket;
 /**
  * Created by Martin on 2017-05-13.
  */
-public class ClientImageConnection extends AbstractClientConnection{
+public class ClientImageConnection extends AbstractClientConnection {
+    private BufferedImage img;
+    private String imgType;
 
     public ClientImageConnection(Socket socket, ServerGUI gui) {
         super(socket,gui);
@@ -18,8 +20,17 @@ public class ClientImageConnection extends AbstractClientConnection{
         System.out.println("ClientImageConnection is up and running");
     }
 
-    public boolean sendImage(BufferedImage img, String imgType){
-        return ImageHandler.sendPicture(img,imgType,dos);
+    public void sendImage(BufferedImage img, String imgType){
+            this.img = img;
+            this.imgType = imgType;
+            new Thread(new ClientWriter()).start();
+    }
+
+    class ClientWriter implements Runnable{
+        @Override
+        public void run() {
+            ImageHandler.sendPicture(img,imgType,dos);
+        }
     }
 
     class ClientReader implements Runnable{
@@ -34,7 +45,7 @@ public class ClientImageConnection extends AbstractClientConnection{
                     header = dis.readUTF();
                     if(header.equals("pic")){
                         gui.updateMessageToTextArea("--- Received picture from client at: " +
-                                socket.getRemoteSocketAddress().toString()+" ---");
+                               clientName +" ---");
                         BufferedImage img = ImageHandler.retrievePicture(dis);
                         if(img!=null){
                             gui.showImage(img);

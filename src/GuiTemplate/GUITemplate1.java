@@ -69,7 +69,6 @@ public abstract class GUITemplate1 extends JFrame {
         messagePanel.add(textField);
         messagePanel.add(sendButton);
 
-
         addListeners();
         setVisible(true);
     }
