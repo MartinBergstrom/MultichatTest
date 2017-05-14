@@ -8,12 +8,15 @@ import java.io.*;
 public class FileHandler {
     public static boolean sendFile(File file, DataOutputStream dos){
         try {
-            //Put this logic in the calling class instead, use this to simply send it?
-            dos.writeUTF("file"); //set header
-            dos.writeUTF(file.getName());
-            dos.writeLong(file.length()); //write length of file in bytes,
             ///
-            
+            FileInputStream fileInput = new FileInputStream(file);
+            byte[] buffer = new byte[8192];
+
+            int count = 0;
+            while( (count = fileInput.read(buffer)) >=0){ //read into the buffer
+                dos.write(buffer,0,count); //write from buffer
+            }
+            dos.flush();
 
         } catch (IOException e) {
             e.printStackTrace();

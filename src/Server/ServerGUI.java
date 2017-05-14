@@ -5,6 +5,8 @@ import Server.Main.MainServer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  * Created by Martin on 2017-05-09.
@@ -23,6 +25,17 @@ public class ServerGUI extends GUITemplate1 {
         messagePanel.add(nbrCLabel);
         messagePanel.add(nbrC);
 
+        JPanel sidePanel = new JPanel();
+        sidePanel.setPreferredSize(new Dimension(110,300));
+        JLabel text = new JLabel("Connected clients: ");
+        text.setFont(new Font("Serif", Font.BOLD,12));
+        sidePanel.add(text);
+        JTextArea test1 = new JTextArea("h1dasda \n hahfahfah");
+        sidePanel.add(new JScrollPane(test1));
+        add(sidePanel,BorderLayout.EAST);
+
+        setSize(new Dimension(520,300));
+
     }
     public void addServer(MainServer server){
         this.server = server;
@@ -36,12 +49,19 @@ public class ServerGUI extends GUITemplate1 {
         }
     }
 
+
     @Override
-    public void  sendPicture() {
+    public void  sendPicture(BufferedImage img, String imgType) {
         if(server.broadcastImage(img, imgType)){
             updateMessageToTextArea("\n--- Picture was successfully broadcasted to the clients ---");
+        }else{
+            updateMessageToTextArea("\n--- Could not broadcast the image, error occured ---");
         }
-        updateMessageToTextArea("\n--- Could not broadcast the image, error occured ---");
+    }
+
+    @Override
+    public void sendFile(File file) {
+
     }
 
     //smells bad? criss cross reference

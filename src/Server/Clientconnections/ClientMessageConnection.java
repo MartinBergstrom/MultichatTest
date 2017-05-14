@@ -4,7 +4,6 @@ import Server.ServerGUI;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -12,39 +11,16 @@ import java.net.Socket;
  *
  * Base connection to client, will start ImageConnection
  */
-public class ClientMessageConnection {
-    private Socket mainClientSocket;
-    private InputStream is;
-    private OutputStream os;
-    private boolean disconnect = false;
-    private DataInputStream dis;
-    private DataOutputStream dos;
-
-    private ServerGUI gui;
+public class ClientMessageConnection extends AbstractClientConnection{
     private ClientImageConnection imageServer;
 
     public ClientMessageConnection(Socket sock, ServerGUI gui, ClientImageConnection imageServer){
-        this.mainClientSocket =sock;
+        super(sock,gui);
         this.imageServer = imageServer;
-        this.gui = gui;
 
-        setUpConnection();
-
+        new Thread(new ClientReader()).start();
         gui.enableActive();
         gui.updateMessageToTextArea("Connection up and running... ");
-    }
-
-    private void setUpConnection(){
-        try {
-            is = mainClientSocket.getInputStream();
-            os = mainClientSocket.getOutputStream();
-            dis = new DataInputStream(is);
-            dos = new DataOutputStream(os);
-
-            new Thread(new ClientReader()).start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -67,7 +43,7 @@ public class ClientMessageConnection {
     class ClientReader implements Runnable{
         @Override
         public void run(){
-            if(!disconnect){
+            if(!getDisconnect()){
                 while (true){
                     try {
                         String header = dis.readUTF();
@@ -90,11 +66,11 @@ public class ClientMessageConnection {
                             }
                         }
                     } catch (IOException e) {
-                        disconnect = true;
-                        gui.updateMessageToTextArea("--- Client: " + mainClientSocket.getRemoteSocketAddress().toString() + " disconnected ---");
+                        disconnect();
+                        gui.updateMessageToTextArea("--- Client: " + socket.getRemoteSocketAddress().toString() + " disconnected ---");
                         gui.checkConnections();
                         try {
-                            mainClientSocket.close();
+                            socket.close();
                         } catch (IOException e1) {}
                         System.out.println("CLIENT DISCONNECTED, TERMINATE THREAD");
                         break;
@@ -102,10 +78,6 @@ public class ClientMessageConnection {
                 }
             }
         }
-    }
-
-    public boolean isDisconnected(){
-        return disconnect;
     }
 }
 

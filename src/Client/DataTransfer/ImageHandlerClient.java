@@ -5,52 +5,19 @@ import HandleDataTransfer.ImageHandler;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Created by Martin on 2017-05-13.
  *
  * Sets up a new socket connection for image transfer
  */
-public class ImageHandlerClient {
-    private String ipAddress;
-    private int port;
-    private Socket socket;
-
+public class ImageHandlerClient extends AbstractConnectionToServer {
     private BufferedImage img;
     private String imgType;
 
-    private DataInputStream dis;
-    private DataOutputStream dos;
-
-    private ClientGUI gui;
-    private boolean disconnected = false;
-
     public ImageHandlerClient(String ipAddress, int port, ClientGUI gui) {
-        this.ipAddress = ipAddress;
-        this.port = port;
-        this.gui = gui;
-        setUpConnection();
-    }
-
-    private void setUpConnection(){
-        try{
-            socket = new Socket(ipAddress,port);
-            InputStream is = socket.getInputStream();
-            OutputStream os = socket.getOutputStream();
-
-            dis = new DataInputStream(is);
-            dos = new DataOutputStream(os);
-
-            new Thread(new ServerReader()).start();
-            System.out.println("ImageHandlerClient is now connected and waiting for images");
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super(ipAddress,port,gui); //this will set up the connection
+        new Thread(new ServerReader()).start();
     }
 
     public void sendImage(BufferedImage img, String imgType) {
@@ -92,9 +59,5 @@ public class ImageHandlerClient {
                 }
             }
         }
-    }
-
-    public void disconnect(){
-        disconnected = true;
     }
 }

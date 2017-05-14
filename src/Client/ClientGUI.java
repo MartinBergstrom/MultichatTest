@@ -2,6 +2,9 @@ package Client;
 
 import GuiTemplate.GUITemplate1;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 /**
  * Created by Martin on 2017-05-08.
  *
@@ -29,8 +32,13 @@ public class ClientGUI extends GUITemplate1 {
     }
 
     @Override
-    public void sendPicture() {
+    public void sendPicture(BufferedImage img , String imgType) {
         client.sendPicture(img,imgType);
         updateMessageToTextArea("");
+    }
+
+    @Override
+    public void sendFile(File file) {
+        client.sendFile(file);
     }
 }

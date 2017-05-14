@@ -81,7 +81,7 @@ public class MainServer {
             Iterator<ClientMessageConnection> itr = connections.iterator();
             while(itr.hasNext()){
                 ClientMessageConnection cct = itr.next();
-                if(cct.isDisconnected()){
+                if(cct.getDisconnect()){
                     itr.remove();
                 }
             }

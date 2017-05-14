@@ -27,12 +27,12 @@ public abstract class GUITemplate1 extends JFrame {
     private JTextPane textPane;
     private JTextField textField;
     private JButton sendButton;
-    private JMenuItem picture;
+    private JMenu sendData;
+    private JMenuItem pictureMenuItem;
+    private JMenuItem fileMenuItem;
     protected JPanel messagePanel;
 
     protected boolean ableToType;
-    protected BufferedImage img;
-    protected String imgType;
 
     public GUITemplate1(String name) {
         super(name);
@@ -42,9 +42,11 @@ public abstract class GUITemplate1 extends JFrame {
         setLayout(new BorderLayout());
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu sendData = new JMenu("Send Data");
-        picture = new JMenuItem("Image");
-        sendData.add(picture);
+        sendData = new JMenu("Send Data");
+        pictureMenuItem = new JMenuItem("Image");
+        sendData.add(pictureMenuItem);
+        fileMenuItem = new JMenuItem("File");
+        sendData.add(fileMenuItem);
         menuBar.add(sendData);
         setJMenuBar(menuBar);
 
@@ -103,7 +105,7 @@ public abstract class GUITemplate1 extends JFrame {
             public void keyReleased(KeyEvent e) {
             }
         });
-        picture.addActionListener(new ActionListener() {
+        pictureMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
@@ -111,7 +113,7 @@ public abstract class GUITemplate1 extends JFrame {
                 int result = fileChooser.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) { //user selected a file
                     File choosenFile = fileChooser.getSelectedFile();
-                    img = null;
+                    BufferedImage img = null;
                     try {
                         String rawImageType = "";
                         ImageInputStream input = ImageIO.createImageInputStream(choosenFile);
@@ -123,19 +125,30 @@ public abstract class GUITemplate1 extends JFrame {
                         if (rawImageType.equalsIgnoreCase("JPEG")) {
                             rawImageType = "jpg";
                         }
-                        imgType = rawImageType;
+                        String imgType = rawImageType;
                         System.out.println("imgTYPE IS :" + imgType);
                         if ((img = ImageIO.read(input)) == null) {
                             updateMessageToTextArea("Could not read that image");
                         }
-                        sendPicture();
-                        showSentImage();
+                        sendPicture(img, imgType);
+                        showSentImage(img);
 
                     } catch (IOException e1) {
                         e1.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Selected file is not image file");
                         return;
                     }
+                }
+            }
+        });
+        fileMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                int result = fileChooser.showOpenDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) {//user selected a file
+                    sendFile(fileChooser.getSelectedFile());
                 }
             }
         });
@@ -159,7 +172,7 @@ public abstract class GUITemplate1 extends JFrame {
         });
     }
 
-    private void showSentImage() {
+    private void showSentImage(BufferedImage img) {
         Image resizedImage = img.getScaledInstance(100, -1, Image.SCALE_SMOOTH); //negative height means keep aspect ratio
         ImageIcon picture = new ImageIcon(resizedImage);
         textPane.insertIcon(picture);
@@ -182,14 +195,14 @@ public abstract class GUITemplate1 extends JFrame {
         ableToType = true;
         textField.setEditable(true);
         sendButton.setEnabled(true);
-        picture.setEnabled(true);
+        sendData.setEnabled(true);
     }
 
     public void disableActive(){
         ableToType = false;
         textField.setEditable(false);
         sendButton.setEnabled(false);
-        picture.setEnabled(false);
+        sendData.setEnabled(false);
     }
 
     /**
@@ -219,8 +232,10 @@ public abstract class GUITemplate1 extends JFrame {
         return typetag+ ": " + hostname + " - " + message;
     }
 
+
     public abstract void sendMessage(String message);
-    public abstract void sendPicture();
+    public abstract void sendPicture(BufferedImage img, String imgType);
+    public abstract void sendFile(File file);
 
 }
 

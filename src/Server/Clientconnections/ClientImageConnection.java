@@ -10,33 +10,12 @@ import java.net.Socket;
 /**
  * Created by Martin on 2017-05-13.
  */
-public class ClientImageConnection {
-    private Socket clientSocket;
-    private boolean disconnected = false;
-    private DataInputStream dis;
-    private DataOutputStream dos;
-
-    private ServerGUI gui;
+public class ClientImageConnection extends AbstractClientConnection{
 
     public ClientImageConnection(Socket socket, ServerGUI gui) {
-        this.clientSocket = socket;
-        this.gui = gui;
-        setUpConnection();
-    }
-
-    private void setUpConnection(){
-        try {
-            InputStream is = clientSocket.getInputStream();
-            OutputStream os = clientSocket.getOutputStream();
-
-            dis = new DataInputStream(is);
-            dos = new DataOutputStream(os);
-
-            new Thread(new ClientReader()).start();
-            System.out.println("ClientImageConnection is up and running");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super(socket,gui);
+        new Thread(new ClientReader()).start();
+        System.out.println("ClientImageConnection is up and running");
     }
 
     public boolean sendImage(BufferedImage img, String imgType){
@@ -55,7 +34,7 @@ public class ClientImageConnection {
                     header = dis.readUTF();
                     if(header.equals("pic")){
                         gui.updateMessageToTextArea("--- Received picture from client at: " +
-                                clientSocket.getRemoteSocketAddress().toString()+" ---");
+                                socket.getRemoteSocketAddress().toString()+" ---");
                         BufferedImage img = ImageHandler.retrievePicture(dis);
                         if(img!=null){
                             gui.showImage(img);
@@ -66,7 +45,7 @@ public class ClientImageConnection {
                 } catch (IOException e) {
                     e.printStackTrace();
                     try{
-                        clientSocket.close();
+                        socket.close();
                         return;
                     } catch (IOException e1) {
                         e1.printStackTrace();
@@ -76,7 +55,4 @@ public class ClientImageConnection {
         }
     }
 
-    public void disconnect(){
-        disconnected = true;
-    }
 }

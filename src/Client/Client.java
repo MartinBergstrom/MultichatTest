@@ -76,6 +76,10 @@ public class Client{
         imageClient.sendImage(img,imageType);
     }
 
+    public void sendFile(File file){
+
+    }
+
 
     class ServerReader implements Runnable {
         @Override
