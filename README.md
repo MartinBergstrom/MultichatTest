@@ -1,6 +1,8 @@
 # MultichatTest
 This is a simple chat program which uses thread to retrieve/send messages. You can send text, images and files.
 
+![alt tag](https://github.com/MartinBergstrom/MultiChatTest/MasterChat3000.jpg)
+
 Several clients can connect to the server. The server can choose which clients to talk to,
 it can also broadcast to all connected clients
 
