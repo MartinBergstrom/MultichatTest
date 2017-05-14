@@ -43,9 +43,9 @@ public abstract class GUITemplate1 extends JFrame {
 
         JMenuBar menuBar = new JMenuBar();
         sendData = new JMenu("Send Data");
-        pictureMenuItem = new JMenuItem("Image");
+        pictureMenuItem = new JMenuItem("Select Image.. ");
         sendData.add(pictureMenuItem);
-        fileMenuItem = new JMenuItem("File");
+        fileMenuItem = new JMenuItem("Select File.. ");
         sendData.add(fileMenuItem);
         menuBar.add(sendData);
         setJMenuBar(menuBar);
