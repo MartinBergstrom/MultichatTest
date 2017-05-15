@@ -19,8 +19,6 @@ import java.net.Socket;
 public class HandleNewClientConnections implements Runnable{
     private ServerGUI gui;
     private int port;
-    private final int imagePort = 4800;
-    private final int filePort = 4900;
 
     private MainServer server;
 
@@ -33,30 +31,29 @@ public class HandleNewClientConnections implements Runnable{
     @Override
     public void run() {
         gui.updateMessageToTextArea("Waiting for clients to connect... ");
-        try(ServerSocket serverSocket = new ServerSocket(port);
-            ServerSocket imageServerSocket = new ServerSocket(imagePort);
-            ServerSocket fileServerSocket = new ServerSocket(filePort)){
-
+        try(ServerSocket serverSocket = new ServerSocket(port)){
             Socket socket;
             Socket imageSocket;
             Socket fileSocket;
             while (true) {
                 try {
-                     socket = serverSocket.accept();
-                     imageSocket = imageServerSocket.accept();
-                     fileSocket = fileServerSocket.accept();
+                    //accept 3 different connections, txt, image and file
+                    socket = serverSocket.accept();
+                    imageSocket = serverSocket.accept();
+                    fileSocket = serverSocket.accept();
+                    ClientImageConnection cic = new ClientImageConnection(imageSocket, gui);
+                    ClientFileConnection cfc = new ClientFileConnection(fileSocket, gui);
+
+                    ClientMessageConnection cmt = new ClientMessageConnection(socket, gui, cic, cfc);
+
+                    gui.updateMessageToTextArea("--- Client at IP address: " + server.getHostname() +
+                            " just connected ----");
+                    server.addConnection(cmt);
+                    gui.setNumberOfConnections(server.getNumberOfConnections());
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
                 }
-                ClientImageConnection cic = new ClientImageConnection(imageSocket,gui);
-                ClientFileConnection cfc = new ClientFileConnection(fileSocket,gui);
-
-                ClientMessageConnection cmt = new ClientMessageConnection(socket, gui, cic,cfc);
-                gui.updateMessageToTextArea("--- Client at IP address: " + server.getHostname() +
-                        " just connected ----");
-                server.addConnection(cmt);
-                gui.setNumberOfConnections(server.getNumberOfConnections());
             }
         }catch (IOException e){
             e.printStackTrace(); //Already shut down

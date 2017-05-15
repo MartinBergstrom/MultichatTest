@@ -7,11 +7,10 @@ import java.io.*;
  */
 public class FileHandler {
     public static boolean sendFile(File file, DataOutputStream dos){
-        try {
+        try( FileInputStream fileInput = new FileInputStream(file)) {
             dos.writeUTF("file"); //set header
             dos.writeUTF(file.getName());
             dos.writeLong(file.length()); //write length of file in bytes,
-            FileInputStream fileInput = new FileInputStream(file);
             byte[] buffer = new byte[8192];
 
             int count ;
@@ -29,8 +28,7 @@ public class FileHandler {
     public static void retreiveAndSaveFile(DataInputStream dis, String filename, long fileSize){
         String newFilePath = "ReceivedFiles/" + filename;
         File destinationfile = new File(newFilePath);
-        try {
-            FileOutputStream fos = new FileOutputStream(destinationfile);
+        try(FileOutputStream fos = new FileOutputStream(destinationfile)) {
             byte[] buffer = new byte[8192];
             int count;
             while(destinationfile.length() != fileSize && (count = dis.read(buffer)) > 0){ //read the incoming file

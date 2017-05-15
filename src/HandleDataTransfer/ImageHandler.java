@@ -57,6 +57,8 @@ public class ImageHandler {
 
             ByteArrayInputStream bais = new ByteArrayInputStream(imageArray);
             img = ImageIO.read(bais);
+
+            bais.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

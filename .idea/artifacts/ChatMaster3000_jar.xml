@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ChatMaster3000:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ChatMaster3000_jar</output-path>
+    <root id="archive" name="ChatMaster3000.jar">
+      <element id="module-output" name="ChatMaster3000" />
+    </root>
+  </artifact>
+</component>

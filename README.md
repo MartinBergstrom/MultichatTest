@@ -12,7 +12,7 @@ You can type what ever you want as third parameter, simply having a third will t
   
 For server:  
 Example cmd with gui:  
-java MainServerHandler "portnummer" gui123  
+java MainServer "portnummer" gui123
 
 
 Typing messages is trivial and can be send by clicking the sendbutton or simply pressing the ENTER key.

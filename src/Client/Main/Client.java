@@ -36,8 +36,8 @@ public class Client{
         gui.enableActive();
 
         //Set up connections for image and file transfer
-        imageClient = new ImageHandlerClient(host,4800,gui); //use port 4800 for images
-        fileClient = new FileHandlerClient(host, 4900,gui); //use port 4900 for files
+        imageClient = new ImageHandlerClient(host,port,gui); //use port 4800 for images
+        fileClient = new FileHandlerClient(host, port,gui); //use port 4900 for files
     }
 
     private void setUpConnection(){
@@ -126,9 +126,10 @@ public class Client{
      */
     public static void main(String[] args){
         Client c = null;
-        System.out.println(args[0] + " " + args[1]);
+        //System.out.println(args[0] + " " + args[1]);
         ClientGUI gui = new ClientGUI();
-        c = new Client(args[0], Integer.parseInt(args[1]), gui);
+        //c = new Client(args[0], Integer.parseInt(args[1]), gui);
+        c = new Client("127.0.0.1",6532,gui);
         gui.addClient(c);
     }
 }

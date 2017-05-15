@@ -1,0 +1,7 @@
+//Add timestamps in gui when receiveing/sending info
+
+//Download files not working, check if dir exists otherwise create it
+//Pop-up window "Client/Server wants to send you a file, accept?" yes/no
+
+//add emojis, pop up gui bar and add to message
+//add notification
