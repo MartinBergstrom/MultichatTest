@@ -36,8 +36,8 @@ public class Client{
         gui.enableActive();
 
         //Set up connections for image and file transfer
-        imageClient = new ImageHandlerClient(host,port,gui); //use port 4800 for images
-        fileClient = new FileHandlerClient(host, port,gui); //use port 4900 for files
+        imageClient = new ImageHandlerClient(host,port,gui);
+        fileClient = new FileHandlerClient(host, port,gui);
     }
 
     private void setUpConnection(){
