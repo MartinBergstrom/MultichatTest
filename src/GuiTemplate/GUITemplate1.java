@@ -13,6 +13,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -30,14 +32,14 @@ public abstract class GUITemplate1 extends JFrame {
     private JMenu sendData;
     private JMenuItem pictureMenuItem;
     private JMenuItem fileMenuItem;
-    protected JPanel messagePanel;
 
+    protected JPanel messagePanel;
     protected boolean ableToType;
 
     public GUITemplate1(String name) {
         super(name);
         ableToType = false;
-        setSize(new Dimension(440, 300));
+        setSize(new Dimension(500, 300));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -71,6 +73,10 @@ public abstract class GUITemplate1 extends JFrame {
 
         addListeners();
         setVisible(true);
+    }
+
+    private String getCurrentTime(){
+        return new SimpleDateFormat("HH:mm:ss").format(new Date());
     }
 
     public void addListeners() {
@@ -125,13 +131,11 @@ public abstract class GUITemplate1 extends JFrame {
                             rawImageType = "jpg";
                         }
                         String imgType = rawImageType;
-                        System.out.println("imgTYPE IS :" + imgType);
                         if ((img = ImageIO.read(input)) == null) {
                             updateMessageToTextArea("Could not read that image");
                         }
                         sendPicture(img, imgType);
                         showSentImage(img);
-
                     } catch (IOException e1) {
                         e1.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Selected file is not image file");
@@ -153,6 +157,21 @@ public abstract class GUITemplate1 extends JFrame {
         });
     }
 
+    public synchronized void insertNewLine(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                StyledDocument doc = textPane.getStyledDocument();
+                try {
+                    doc.insertString(doc.getLength(),"\n", null);
+                } catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
+                textPane.setCaretPosition(doc.getLength());
+            }
+        });
+    }
+
     public synchronized void updateMessageToTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -160,9 +179,12 @@ public abstract class GUITemplate1 extends JFrame {
                 StyledDocument doc = textPane.getStyledDocument();
                 StyleContext context = new StyleContext();
                 Style style = context.addStyle("test", null);
+                Style timeStyle = context.addStyle("time", null);
+                StyleConstants.setFontSize(timeStyle,9);
                 StyleConstants.setForeground(style, Color.BLACK);
                 try {
-                    doc.insertString(doc.getLength(), text + "\n", style);
+                    doc.insertString(doc.getLength(),getCurrentTime() + " ",timeStyle);
+                    doc.insertString(doc.getLength(),text + "\n", style);
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }
@@ -185,7 +207,7 @@ public abstract class GUITemplate1 extends JFrame {
                 Image resizedImage = img.getScaledInstance(200,-1,Image.SCALE_SMOOTH); //negative height means keep aspect ratio
                 ImageIcon picture = new ImageIcon(resizedImage);
                 textPane.insertIcon(picture);
-                updateMessageToTextArea("");
+                insertNewLine();
             }
         });
     }

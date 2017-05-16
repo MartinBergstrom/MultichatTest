@@ -35,11 +35,13 @@ public class ClientGUI extends GUITemplate1 {
     @Override
     public void sendPicture(BufferedImage img , String imgType) {
         client.sendPicture(img,imgType);
-        updateMessageToTextArea("");
+        insertNewLine();
+        updateMessageToTextArea("--- Successfully sent the picture to server ---");
     }
 
     @Override
     public void sendFile(File file) {
         client.sendFile(file);
+        updateMessageToTextArea("--- Successfully sent the file to server ---");
     }
 }

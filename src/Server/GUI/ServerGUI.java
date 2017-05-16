@@ -46,7 +46,7 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
         add(sidePanel,BorderLayout.EAST);
 
         disableActive();
-        setSize(new Dimension(600,300));
+        setSize(new Dimension(620,300));
 
     }
     public void addServer(MainServer server){
@@ -65,18 +65,19 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
     @Override
     public void  sendPicture(BufferedImage img, String imgType) {
         if(server.sendImage(img, imgType)){
-            updateMessageToTextArea("\n--- Picture was successfully sent to the selected clients ---");
+            insertNewLine();
+            updateMessageToTextArea("--- Picture was successfully sent to the selected clients ---");
         }else{
-            updateMessageToTextArea("\n--- Could not send the image, error occurred ---");
+            updateMessageToTextArea("--- Could not send the image, error occurred ---");
         }
     }
 
     @Override
     public void sendFile(File file) {
         if(server.sendFile(file)){
-            updateMessageToTextArea("\n--- File was successfully sent to the clients ---");
+            updateMessageToTextArea("--- File was successfully sent to the clients ---");
         }else{
-            updateMessageToTextArea("\n--- Could not send the file, error occurred ---");
+            updateMessageToTextArea("--- Could not send the file, error occurred ---");
         }
     }
 
