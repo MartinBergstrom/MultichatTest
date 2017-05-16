@@ -61,7 +61,10 @@ public class FileHandlerClient extends AbstractConnectionToServer {
                                 " and saved it in folder ReveivedFiles ---");
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    try{
+                        socket.close();
+                    } catch (IOException e1) {}
+                    return;
                 }
 
             }

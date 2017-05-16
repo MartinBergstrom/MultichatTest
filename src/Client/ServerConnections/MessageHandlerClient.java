@@ -56,7 +56,6 @@ public class MessageHandlerClient extends AbstractConnectionToServer {
                         gui.updateMessageToTextArea(message);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
                     gui.updateMessageToTextArea("Lost connection to server, shutting down... ");
                     try {
                         Thread.sleep(2500);

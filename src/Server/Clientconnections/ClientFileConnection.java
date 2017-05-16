@@ -48,7 +48,6 @@ public class ClientFileConnection extends AbstractClientConnection {
                                 clientName + " and saved it in folder ReveivedFiles ---");
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
                     try{
                         socket.close();
                         return;

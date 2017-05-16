@@ -53,7 +53,6 @@ public class ClientImageConnection extends AbstractClientConnection {
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
                     try{
                         socket.close();
                         return;
