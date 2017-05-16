@@ -22,6 +22,7 @@ public class AbstractClientConnection {
         this.gui = gui;
         setUpConnection();
         clientName = socket.getRemoteSocketAddress().toString();
+        System.out.println(clientName);
     }
 
 
@@ -32,6 +33,7 @@ public class AbstractClientConnection {
             dis = new DataInputStream(is);
             dos = new DataOutputStream(os);
 
+            dos.writeUTF("ack");
 
         } catch (IOException e) {
             e.printStackTrace();

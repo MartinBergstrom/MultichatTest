@@ -1,16 +1,17 @@
 package Server.Main;
 
+import Server.Clientconnections.ClientFileConnection;
+import Server.Clientconnections.ClientImageConnection;
 import Server.Clientconnections.ClientMessageConnection;
-import Server.GUI.ListOfConnections;
+import Server.Clientconnections.Connections;
 import Server.HandleNewClients.HandleNewClientConnections;
 import Server.GUI.ServerGUI;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
 public class MainServer{
     private static String hostname;
     private int port;
-    private List<ClientMessageConnection> allConnections;
-    private List<ClientMessageConnection> activeConnections;
+    private List<Connections> allConnections;
+    private List<Connections> activeConnections;
 
     private ServerGUI gui;
 
@@ -49,16 +50,16 @@ public class MainServer{
 
     }
 
-    public synchronized void addConnection(ClientMessageConnection cct){
-        allConnections.add(cct);
-        gui.addConnectionToList(cct); //add to gui
+    public synchronized void addConnection(Connections connections){
+        allConnections.add(connections);
+        gui.addConnectionToList(connections); //add to gui
     }
 
     public synchronized boolean sendMessage(String message){
         boolean finished = true;
-        Iterator<ClientMessageConnection> itr = activeConnections.iterator();
+        Iterator<Connections> itr = activeConnections.iterator();
         while (itr.hasNext()){
-            ClientMessageConnection cct = itr.next();
+            ClientMessageConnection cct = itr.next().getCmc();
             if(!cct.sendMessage(message)){
                 finished = false;
                 break;
@@ -68,18 +69,18 @@ public class MainServer{
     }
 
     public synchronized boolean sendImage(BufferedImage image, String imageType){
-        Iterator<ClientMessageConnection> itr = activeConnections.iterator();
+        Iterator<Connections> itr = activeConnections.iterator();
         while (itr.hasNext()){
-            ClientMessageConnection cct = itr.next();
-            cct.sendPicture(image,imageType);
+            ClientImageConnection cct = itr.next().getCic();
+            cct.sendImage(image,imageType);
         }
         return true;
     }
 
     public synchronized boolean sendFile(File file){
-        Iterator<ClientMessageConnection> itr = activeConnections.iterator();
+        Iterator<Connections> itr = activeConnections.iterator();
         while (itr.hasNext()){
-            ClientMessageConnection cct = itr.next();
+            ClientFileConnection cct = itr.next().getCfc();
             cct.sendFile(file);
         }
         return true;
@@ -91,9 +92,9 @@ public class MainServer{
 
     public synchronized void checkConnections(){
         if(allConnections.size()>0){
-            Iterator<ClientMessageConnection> itr = allConnections.iterator();
+            Iterator<Connections> itr = allConnections.iterator();
             while(itr.hasNext()){
-                ClientMessageConnection cct = itr.next();
+                Connections cct = itr.next();
                 if(cct.getDisconnect()){
                     itr.remove();
                     gui.removeConnectionFromList(cct);
@@ -102,7 +103,7 @@ public class MainServer{
         }
     }
 
-    public synchronized void setSelectedValues(List<ClientMessageConnection> selectedValues) {
+    public synchronized void setSelectedValues(List<Connections> selectedValues) {
         activeConnections = new ArrayList<>(selectedValues);
     }
 

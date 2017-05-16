@@ -11,9 +11,10 @@ import java.net.UnknownHostException;
  *
  * Abstract class for a client connection. Sets up the socket and the Data(Input/Output)Streams
  */
-public class AbstractConnectionToServer {
+public abstract class AbstractConnectionToServer {
     protected String ipAddress;
     protected ClientGUI gui;
+    protected String clientName; //this will be the clients name for this particular connection
 
     protected int port;
     protected Socket socket;
@@ -38,7 +39,7 @@ public class AbstractConnectionToServer {
 
             dis = new DataInputStream(is);
             dos = new DataOutputStream(os);
-
+            clientName = socket.getLocalSocketAddress().toString();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -46,7 +47,12 @@ public class AbstractConnectionToServer {
         }
     }
 
+    public String getClientName(){
+        return clientName;
+    }
     public void disconnect(){
         disconnected = true;
     }
+
+    public abstract void sendClientInfo(String clientName);
 }

@@ -2,18 +2,20 @@ package Server.GUI;
 
 
 import Server.Clientconnections.ClientMessageConnection;
+import Server.Clientconnections.Connections;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
+import java.sql.Connection;
 
 /**
  * Created by Martin on 2017-05-14.
  */
 public class ListOfConnections extends JPanel {
-    private DefaultListModel<ClientMessageConnection> listModel;
-    private JList<ClientMessageConnection> list;
+    private DefaultListModel<Connections> listModel;
+    private JList<Connections> list;
     private JButton broadcastButton;
 
     public ListOfConnections(){
@@ -34,15 +36,15 @@ public class ListOfConnections extends JPanel {
         broadcastButton.addActionListener(al);
     }
 
-    public void addConnection(ClientMessageConnection cmc){
-        listModel.addElement(cmc);
+    public void addConnection(Connections connections){
+        listModel.addElement(connections);
     }
 
-    public void removeConnection(ClientMessageConnection cmc){
-        listModel.removeElement(cmc);
+    public void removeConnection(Connections connections){
+        listModel.removeElement(connections);
     }
 
-    public JList<ClientMessageConnection> getList(){
+    public JList<Connections> getList(){
         return list;
     }
 

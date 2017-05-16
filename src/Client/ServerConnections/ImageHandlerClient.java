@@ -17,6 +17,18 @@ public class ImageHandlerClient extends AbstractConnectionToServer {
 
     public ImageHandlerClient(String ipAddress, int port, ClientGUI gui) {
         super(ipAddress,port,gui); //this will set up the connection
+    }
+
+    @Override
+    public void sendClientInfo(String clientName) {
+        try {
+            dos.writeUTF("ImageConnection");
+            dos.writeUTF(clientName);
+
+            dis.readUTF(); //wait for ack
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         new Thread(new ServerReader()).start();
     }
 

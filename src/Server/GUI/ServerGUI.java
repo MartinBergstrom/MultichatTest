@@ -2,6 +2,7 @@ package Server.GUI;
 
 import GuiTemplate.GUITemplate1;
 import Server.Clientconnections.ClientMessageConnection;
+import Server.Clientconnections.Connections;
 import Server.Main.MainServer;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -89,11 +91,12 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
         setNumberOfConnections(server.getNumberOfConnections());
     }
 
-    public void addConnectionToList(ClientMessageConnection cmc){
-        listOfConnections.addConnection(cmc);
+    public void addConnectionToList(Connections connections){
+        System.out.println("trying to add the new connection in gui list");
+        listOfConnections.addConnection(connections);
     }
-    public void removeConnectionFromList(ClientMessageConnection cmc){
-        listOfConnections.removeConnection(cmc);
+    public void removeConnectionFromList(Connections connections){
+        listOfConnections.removeConnection(connections);
     }
 
     public void setNumberOfConnections(int nbr){
@@ -104,7 +107,7 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
     public void valueChanged(ListSelectionEvent e) {
         if(!e.getValueIsAdjusting()){
             enableActive();
-            final List<ClientMessageConnection> selectedValues = listOfConnections.getList().getSelectedValuesList();
+            final List<Connections> selectedValues = listOfConnections.getList().getSelectedValuesList();
             server.setSelectedValues(selectedValues);
         }
     }

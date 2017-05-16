@@ -9,21 +9,16 @@ import java.net.Socket;
 /**
  * Created by Martin on 2017-05-09.
  *
- * Base connection to client, will start ImageConnection
+ *
  */
 public class ClientMessageConnection extends AbstractClientConnection {
-    private ClientImageConnection imageServer;
-    private ClientFileConnection fileServer;
 
-    public ClientMessageConnection(Socket sock, ServerGUI gui, ClientImageConnection imageServer, ClientFileConnection fileServer){
+    public ClientMessageConnection(Socket sock, ServerGUI gui){
         super(sock,gui);
-        this.imageServer = imageServer;
-        this.fileServer = fileServer;
 
         new Thread(new ClientReader()).start();
         gui.updateMessageToTextArea("Connection up and running... ");
     }
-
 
     public boolean sendMessage(String message){
         try{
@@ -35,19 +30,6 @@ public class ClientMessageConnection extends AbstractClientConnection {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return clientName;
-    }
-
-    public void sendPicture(BufferedImage image, String imageType){
-         imageServer.sendImage(image,imageType);
-    }
-
-    public void sendFile(File file){
-        fileServer.sendFile(file);
     }
 
     class ClientReader implements Runnable{

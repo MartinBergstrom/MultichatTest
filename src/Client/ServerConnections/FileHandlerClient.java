@@ -15,6 +15,18 @@ public class FileHandlerClient extends AbstractConnectionToServer {
     public FileHandlerClient(String ipAddress, int port, ClientGUI gui) {
         super(ipAddress, port, gui);
         file = null;
+    }
+
+    @Override
+    public void sendClientInfo(String clientName) {
+        try {
+            dos.writeUTF("FileConnection");
+            dos.writeUTF(clientName);
+
+            dis.readUTF(); //wait for ack
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         new Thread(new ServerReader()).start();
     }
 

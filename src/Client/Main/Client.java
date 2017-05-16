@@ -3,6 +3,7 @@ package Client.Main;
 import Client.GUI.ClientGUI;
 import Client.ServerConnections.FileHandlerClient;
 import Client.ServerConnections.ImageHandlerClient;
+import Client.ServerConnections.MessageHandlerClient;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -15,15 +16,11 @@ import java.net.Socket;
 public class Client{
     private static String host;
     private static int port;
-    private static String hostname;
-    private InputStream is;
-    private OutputStream os;
-    private DataInputStream dis;
-    private DataOutputStream dos;
-    private Socket socket;
+    private String clientName;
 
     private ClientGUI gui;
 
+    private MessageHandlerClient messageClient;
     private ImageHandlerClient imageClient;
     private FileHandlerClient fileClient;
 
@@ -31,49 +28,28 @@ public class Client{
         this.host = host;
         this.port = port;
         this.gui = gui;
-        setUpConnection();
-        gui.updateMessageToTextArea("--- You're now connected to server at IP: " + host + " ---");
-        gui.enableActive();
 
-        //Set up connections for image and file transfer
-        imageClient = new ImageHandlerClient(host,port,gui);
-        fileClient = new FileHandlerClient(host, port,gui);
+        setUpConnections();
+        gui.enableActive();
     }
 
-    private void setUpConnection(){
-        try {
-            gui.updateMessageToTextArea("Establishing connection to server... ");
-            socket = new Socket(host, port);
-            is = socket.getInputStream();
-            os = socket.getOutputStream();
+    private void setUpConnections(){
+        gui.updateMessageToTextArea("Establishing connection to server at IP: " + host + " ... ");
+        messageClient = new MessageHandlerClient(host,port,gui); //this will set the clientName
+        clientName = messageClient.getClientName();
+        System.out.println(clientName);
+        messageClient.sendClientInfo(clientName);
 
-            dis = new DataInputStream(is);
-            dos = new DataOutputStream(os);
+        imageClient = new ImageHandlerClient(host,port,gui);
+        imageClient.sendClientInfo(clientName);
 
-            new Thread(new ServerReader()).start();
-
-            hostname = Inet4Address.getLocalHost().toString();
-        } catch (IOException e) {
-            System.err.println("Could not connect to server");
-            System.exit(0);
-        }
+        fileClient = new FileHandlerClient(host,port,gui);
+        fileClient.sendClientInfo(clientName);
+        gui.updateMessageToTextArea("Connected to server at IP: " + host);
     }
 
     public boolean sendMessage(String message){
-        try {
-            dos.writeUTF("msg");
-            dos.writeUTF(message);
-            dos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            if(gui!=null){
-                gui.updateMessageToTextArea("Something went wrong, couldn't send the message");
-            }else{
-                System.out.println("Something went wrong, couldn't send the message");
-            }
-            return false;
-        }
-        return true;
+       return messageClient.sendMessage(message);
     }
 
     public void sendPicture(BufferedImage img, String imageType){
@@ -84,39 +60,8 @@ public class Client{
         fileClient.sendFile(file);
     }
 
-
-    class ServerReader implements Runnable {
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    String header = dis.readUTF();
-                    if(header.equals("msg")){
-                        String message = dis.readUTF();
-                        gui.updateMessageToTextArea(message);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    gui.updateMessageToTextArea("Lost connection to server, shutting down... ");
-                    try {
-                        Thread.sleep(2500);
-                        socket.close(); //this also closes is and os
-                        disconnectConnections();
-                        System.exit(0);
-                    } catch (IOException e1) {}
-                      catch (InterruptedException e1) {}
-                }
-            }
-        }
-    }
-
-    private void disconnectConnections(){
-        imageClient.disconnect();
-        fileClient.disconnect();
-    }
-
     public String getHostName(){
-        return hostname;
+        return clientName;
     }
 
     /**

@@ -5,3 +5,8 @@
 
 //add emojis, pop up gui bar and add to message
 //add notification
+
+--- REFACTORING ---
+//Important: Fix HandleNewClientConnnection, if several clients connect same time it would be messed up
+
+//client and serverHandler which holds all the connections and you use it to send different data types?
