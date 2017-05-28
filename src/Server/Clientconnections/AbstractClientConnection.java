@@ -14,7 +14,6 @@ public class AbstractClientConnection {
     protected boolean disconnected = false;
     protected DataInputStream dis;
     protected DataOutputStream dos;
-
     protected ServerGUI gui;
 
     public AbstractClientConnection(Socket sock, ServerGUI gui){
@@ -24,7 +23,6 @@ public class AbstractClientConnection {
         clientName = socket.getRemoteSocketAddress().toString();
         System.out.println(clientName);
     }
-
 
     private void setUpConnection(){
         try {

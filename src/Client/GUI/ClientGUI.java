@@ -1,8 +1,10 @@
 package Client.GUI;
 
 import Client.Main.Client;
-import GuiTemplate.GUITemplate1;
+import GUITemplate.GUITemplate1;
+import jdk.nashorn.internal.scripts.JO;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -16,10 +18,10 @@ public class ClientGUI extends GUITemplate1 {
 
     public ClientGUI(){
         super("Client");
-    }
-
-    public void addClient(Client c){
-        this.client = c;
+//        String hostname = JOptionPane.showInputDialog(this,"Enter server IP:");
+//        int port = Integer.parseInt(JOptionPane.showInputDialog(this,"Enter port number"));
+//        client = new Client(hostname,port,this);
+        client = new Client("127.0.0.1", 6532,this);
     }
 
     @Override
@@ -42,6 +44,5 @@ public class ClientGUI extends GUITemplate1 {
     @Override
     public void sendFile(File file) {
         client.sendFile(file);
-        updateMessageToTextArea("--- Successfully sent the file to server ---");
     }
 }

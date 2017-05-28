@@ -1,7 +1,6 @@
 package Server.GUI;
 
-import GuiTemplate.GUITemplate1;
-import Server.Clientconnections.ClientMessageConnection;
+import GUITemplate.GUITemplate1;
 import Server.Clientconnections.Connections;
 import Server.Main.MainServer;
 
@@ -11,7 +10,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,6 +24,7 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
 
     public ServerGUI(){
         super("Server");
+        setLocation(new Point(600,80));
         JLabel nbrCLabel = new JLabel("Nbr of connections:");
         nbrCLabel.setFont(new Font("Serif", Font.BOLD,10));
 
@@ -35,7 +34,7 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
         messagePanel.add(nbrC);
 
         JPanel sidePanel = new JPanel();
-        sidePanel.setPreferredSize(new Dimension(170,300));
+        sidePanel.setPreferredSize(new Dimension(170,350));
         JLabel text = new JLabel("Connected clients: ");
         text.setFont(new Font("Serif", Font.BOLD,12));
         sidePanel.add(text);
@@ -43,10 +42,10 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
         listOfConnections.addListSelectionListener(this);
         listOfConnections.addBroadcastListener(this);
         sidePanel.add(listOfConnections);
-        add(sidePanel,BorderLayout.EAST);
+        backgroundPanel.add(sidePanel,BorderLayout.EAST);
 
         disableActive();
-        setSize(new Dimension(620,300));
+        setSize(new Dimension(700,370));
 
     }
     public void addServer(MainServer server){
@@ -63,7 +62,7 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
 
 
     @Override
-    public void  sendPicture(BufferedImage img, String imgType) {
+    public void sendPicture(BufferedImage img, String imgType) {
         if(server.sendImage(img, imgType)){
             insertNewLine();
             updateMessageToTextArea("--- Picture was successfully sent to the selected clients ---");
@@ -74,11 +73,7 @@ public class ServerGUI extends GUITemplate1 implements ActionListener,ListSelect
 
     @Override
     public void sendFile(File file) {
-        if(server.sendFile(file)){
-            updateMessageToTextArea("--- File was successfully sent to the clients ---");
-        }else{
-            updateMessageToTextArea("--- Could not send the file, error occurred ---");
-        }
+        server.sendFile(file);
     }
 
     //smells bad? criss cross reference

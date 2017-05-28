@@ -2,6 +2,11 @@ package Server.Clientconnections;
 
 /**
  * Created by Martin on 2017-05-16.
+ *
+ * Class to gather all the different connections and create it as a whole.
+ *
+ * Three different connection are required to be able
+ * to send all the different data types simultaneously
  */
 public class Connections {
     private ClientMessageConnection cmc;

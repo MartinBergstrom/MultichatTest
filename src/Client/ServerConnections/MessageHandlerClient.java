@@ -50,6 +50,9 @@ public class MessageHandlerClient extends AbstractConnectionToServer {
         public void run() {
             while (true) {
                 try {
+                    if(disconnected){ //exit thread
+                        throw new IOException();
+                    }
                     String header = dis.readUTF();
                     if(header.equals("msg")){
                         String message = dis.readUTF();
@@ -59,7 +62,7 @@ public class MessageHandlerClient extends AbstractConnectionToServer {
                     gui.updateMessageToTextArea("Lost connection to server, shutting down... ");
                     try {
                         Thread.sleep(2500);
-                        socket.close(); //this also closes is and os
+                        socket.close();
                         System.exit(0);
                     } catch (IOException e1) {}
                     catch (InterruptedException e1) {}

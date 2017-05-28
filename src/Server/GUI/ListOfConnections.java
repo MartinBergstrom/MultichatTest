@@ -6,8 +6,8 @@ import Server.Clientconnections.Connections;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
 import java.sql.Connection;
 
 /**
@@ -20,6 +20,7 @@ public class ListOfConnections extends JPanel {
 
     public ListOfConnections(){
         setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(160,250));
         listModel = new DefaultListModel<>();
 
         list = new JList<>(listModel);

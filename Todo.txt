@@ -2,13 +2,17 @@
 DONE
 
 //Download files not working, check if dir exists otherwise create it
-
+DONE
 
 //Pop-up window "Client/Server wants to send you a file, accept?" yes/no
+DONE
 
-//add emojis, pop up gui bar and add to message
+//add emojis, pop up gui bar and add to message.
+let messgeThread determine if emoji and show it? send text in analyser to check for emojis before showing on GUI?
+class for analysing with static methods
 
 //add notification
+SHOULD WORK, TEST IT
 
 --- REFACTORING ---
 //Important: Fix HandleNewClientConnnection, if several clients connect same time it would be messed up.
@@ -16,3 +20,5 @@ DONE
 
 //client and serverHandler which holds all the connections and you use it to send different data types?
 DONE
+
+//what if one of the connections fail? -> disconnect all

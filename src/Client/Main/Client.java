@@ -7,11 +7,12 @@ import Client.ServerConnections.MessageHandlerClient;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.Inet4Address;
-import java.net.Socket;
 
 /**
  * Created by Martin on 2017-05-09.
+ *
+ * Client main handler to setUp the connections, Three different connection are required to be able
+ * to send all the different data types simultaneously
  */
 public class Client{
     private static String host;
@@ -34,10 +35,10 @@ public class Client{
     }
 
     private void setUpConnections(){
-        gui.updateMessageToTextArea("Establishing connection to server at IP: " + host + " ... ");
+        gui.updateMessageToTextArea("--- Establishing connection to server at IP: " + host + " ... ---");
         messageClient = new MessageHandlerClient(host,port,gui); //this will set the clientName
         clientName = messageClient.getClientName();
-        System.out.println(clientName);
+        //System.out.println(clientName);
         messageClient.sendClientInfo(clientName);
 
         imageClient = new ImageHandlerClient(host,port,gui);
@@ -45,7 +46,7 @@ public class Client{
 
         fileClient = new FileHandlerClient(host,port,gui);
         fileClient.sendClientInfo(clientName);
-        gui.updateMessageToTextArea("Connected to server at IP: " + host);
+        gui.updateMessageToTextArea("--- Connected to server at IP: " + host +" ---");
     }
 
     public boolean sendMessage(String message){
@@ -57,7 +58,7 @@ public class Client{
     }
 
     public void sendFile(File file){
-        fileClient.sendFile(file);
+         fileClient.sendFile(file);
     }
 
     public String getHostName(){
@@ -70,11 +71,8 @@ public class Client{
      * @param args host, port and write anything else for gui
      */
     public static void main(String[] args){
-        Client c = null;
         //System.out.println(args[0] + " " + args[1]);
         ClientGUI gui = new ClientGUI();
         //c = new Client(args[0], Integer.parseInt(args[1]), gui);
-        c = new Client("127.0.0.1",6532,gui);
-        gui.addClient(c);
     }
 }

@@ -18,9 +18,10 @@ public class ClientFileConnection extends AbstractClientConnection {
         new Thread(new ClientReader()).start();
     }
 
-    public void sendFile(File file){
+    public void sendFile(File file) {
+        FileHandler.askToAccept(file, dos); //ask Client to accept this shit
+        System.out.println("asked client to accept the mofo");
         this.file = file;
-        new Thread(new ClientWriter()).start();
     }
 
     class ClientWriter implements Runnable{
@@ -30,6 +31,7 @@ public class ClientFileConnection extends AbstractClientConnection {
         }
     }
 
+    //Mainly used for reading incoming client messages and to call readFile or sendFile if accept
     class ClientReader implements Runnable{
         @Override
         public void run() {
@@ -39,13 +41,27 @@ public class ClientFileConnection extends AbstractClientConnection {
                     if(disconnected){
                         throw new IOException();
                     }
-                    header = dis.readUTF();
-                    if(header.equals("file")){
+                    String message = dis.readUTF();
+                    System.out.println("GOT MESSAGE FROM CLIENT AND THAT IS: " + message);
+                    if(message.equals("accept")){ //client wants to send you shit
                         String fileName = dis.readUTF();
                         long fileSize = dis.readLong();
-                        FileHandler.retreiveAndSaveFile(dis, fileName,fileSize);
-                        gui.updateMessageToTextArea("--- Recevied a file named: " + fileName + " from client: " +
-                                clientName + " and saved it in folder ReveivedFiles ---");
+                        String answer = gui.getConfirmDialog("--- Client at: "+ clientName + " wants to send you a file named: " + fileName +
+                                " with the size: " + fileSize + " bytes. \n Do you accept?");
+                        if(answer.equals("yes")) {
+                            dos.writeUTF("sendMeFile"); //tell client to send file
+                            FileHandler.retreiveAndSaveFile(dis, fileName, fileSize); //start to receive the file
+                            gui.updateMessageToTextArea("--- Recevied a file named: " + fileName +
+                                    " and saved it in folder ReveivedFiles ---");
+
+                        }else{
+                            dos.writeUTF("No"); //tell client to not send file
+                        }
+                    }else if(message.equals("sendMeFile")){ //client wants you to send the file
+                        new Thread(new ClientWriter()).start();
+                        gui.updateMessageToTextArea("--- The file was successfully sent out to the client at: " + clientName + " ---");
+                    }else if(message.equals("No")){
+                        gui.updateMessageToTextArea("--- The client at : " + clientName + " declined to accept ---");
                     }
                 } catch (IOException e) {
                     try{

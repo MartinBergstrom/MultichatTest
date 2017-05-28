@@ -30,15 +30,14 @@ public class FileHandlerClient extends AbstractConnectionToServer {
         new Thread(new ServerReader()).start();
     }
 
-    public void sendFile(File file){
+    public void sendFile(File file) {
+        FileHandler.askToAccept(file, dos); //check if server accepts to receive
         this.file = file;
-        new Thread(new ServerWriter()).start();
     }
 
     class ServerWriter implements Runnable{
         @Override
         public void run() {
-            //Put this logic in the calling class instead, use this to simply send it?
             FileHandler.sendFile(file,dos);
         }
     }
@@ -51,14 +50,27 @@ public class FileHandlerClient extends AbstractConnectionToServer {
                     if (disconnected) {
                         throw new IOException(); //exit thread
                     }
-                    String header = dis.readUTF();
-                    if(header.equals("file")){
-                        String filename = dis.readUTF();
-                        System.out.println("filename is : " + filename);
+                    String message = dis.readUTF();
+                    if(message.equals("accept")){ //server wants to send you file
+                        String fileName = dis.readUTF();
                         long fileSize = dis.readLong();
-                        FileHandler.retreiveAndSaveFile(dis,filename,fileSize);
-                        gui.updateMessageToTextArea("--- Recevied a file named: " + filename +
-                                " and saved it in folder ReveivedFiles ---");
+                        String answer = gui.getConfirmDialog("--- Server wants to send you a file named: " + fileName +
+                                " with the size: " + fileSize + " bytes. \n Do you accept?");
+                        if(answer.equals("yes")) {
+                            dos.writeUTF("sendMeFile"); //tell server to send it
+                            dos.flush();
+                            System.out.println("told the server yes");
+                            FileHandler.retreiveAndSaveFile(dis, fileName, fileSize);
+                            gui.updateMessageToTextArea("--- Recevied a file named: " + fileName +
+                                    " and saved it in folder ReveivedFiles ---");
+                        }else{
+                            dos.writeUTF("No");
+                        }
+                    }else if(message.equals("sendMeFile")){ //server accepts and wants you to send it
+                        new Thread(new ServerWriter()).start();
+                        gui.updateMessageToTextArea("--- The file was successfully sent out to the server ---");
+                    }else if(message.equals("No")){
+                        gui.updateMessageToTextArea("--- Server declined to accept the file ---");
                     }
                 } catch (IOException e) {
                     try{
@@ -66,7 +78,6 @@ public class FileHandlerClient extends AbstractConnectionToServer {
                     } catch (IOException e1) {}
                     return;
                 }
-
             }
         }
     }
